@@ -40,9 +40,9 @@ public class PlayerMover : MonoBehaviour
     {
         float direction = GetHorizontalDirection();
 
-        if (direction > 0 && _spriteRenderer.flipX)
+        if (direction > 0)
             _spriteRenderer.flipX = false;
-        if (direction < 0 && _spriteRenderer.flipX == false)
+        if (direction < 0)
             _spriteRenderer.flipX = true;
     }
 
