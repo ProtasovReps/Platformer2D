@@ -42,6 +42,7 @@ public class PlayerMover : MonoBehaviour
 
         if (direction > 0)
             _spriteRenderer.flipX = false;
+
         if (direction < 0)
             _spriteRenderer.flipX = true;
     }
@@ -61,4 +62,3 @@ public class PlayerMover : MonoBehaviour
 
     private float GetHorizontalDirection() => Input.GetAxisRaw(Horizontal);
 }
-
