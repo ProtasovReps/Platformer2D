@@ -3,10 +3,15 @@ using UnityEngine;
 public class EnemyMover : MonoBehaviour
 {
     [SerializeField] private GroundChecker _groundChecker;
-    [SerializeField] private AnimatorToggler _animatorToggler;
     [SerializeField] private float _moveSpeed;
+     
+    private AnimatorToggler _animatorToggler;
 
-    private void Start() => _animatorToggler.SetRunBool(true);
+    public void Initialize(Animator animator)
+    {
+        _animatorToggler = new AnimatorToggler(animator);
+        _animatorToggler.SetRunBool(true);
+    }
 
     private void Update() => Patrol();
 
