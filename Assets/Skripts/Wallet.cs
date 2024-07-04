@@ -1,7 +1,6 @@
 using System;
-using UnityEngine;
 
-public class Wallet : MonoBehaviour
+public class Wallet
 {
     public event Action AmountChanged;
 

@@ -2,23 +2,25 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class PlayerMover : MonoBehaviour
 {
     private const string Horizontal = nameof(Horizontal);
     private const string Vertical = nameof(Vertical);
 
     [SerializeField] private GroundChecker _groundChecker;
-    [SerializeField] private AnimatorToggler _animatorToggler;
 
+    private AnimatorToggler _animatorToggler;
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
     private float _moveSpeed = 14f;
     private float _jumpForce = 20f;
 
-    private void Start()
+    public void Initialize(Animator animator)
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _animatorToggler = new AnimatorToggler(animator);
     }
 
     private void Update()

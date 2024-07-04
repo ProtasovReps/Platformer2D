@@ -1,8 +1,13 @@
 using UnityEngine;
 
-public class AnimatorToggler : MonoBehaviour 
+public class AnimatorToggler 
 {
-    [SerializeField] private Animator _animator;
+    private Animator _animator;
+
+    public AnimatorToggler(Animator animator)
+    {
+        _animator = animator;
+    }
 
     public void SetAttackTrigger() => _animator.SetTrigger(AnimatorConstants.Attack.ToString());
 
