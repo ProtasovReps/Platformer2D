@@ -10,8 +10,8 @@ public class WalletView : MonoBehaviour
     public void Initialize(Wallet wallet)
     {
         _wallet = wallet;
-        
         _wallet.AmountChanged += DisplayCoinsAmount;
+        
         DisplayCoinsAmount();
     }
         

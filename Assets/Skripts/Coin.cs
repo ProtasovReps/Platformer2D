@@ -1,6 +1,10 @@
 using UnityEngine;
 
-public class Coin : MonoBehaviour
+public class Coin : Collectible
 {
-    public void Hide() => gameObject.SetActive(false);
+    public override void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.TryGetComponent(out Collector collector))
+            collector.AddMoney(this);
+    }
 }

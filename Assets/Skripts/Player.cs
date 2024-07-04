@@ -6,9 +6,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Collector _collector;
     [SerializeField] private Animator _animator;
     
-    private void Awake() => Initialize();
-
-    private void Initialize()
+    public void Initialize()
     {
         _playerMover.Initialize(_animator);
         _collector.Initialize();

@@ -12,12 +12,15 @@ public class Collector : MonoBehaviour
         _walletView.Initialize(_wallet);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void AddMoney(Coin coin)
     {
-        if (collision.TryGetComponent(out Coin coin))
-        {
-            coin.Hide();
-            _wallet.AddCoin();
-        }
+        coin.Disappear();
+        _wallet.AddCoin();
+    }
+
+    public void Heal(Food food)
+    {
+        food.Disappear();
+        //_health.Heal
     }
 }
