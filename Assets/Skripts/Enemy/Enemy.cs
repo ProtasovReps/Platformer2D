@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
     private void Initialize()
     {
         _animatorToggler = new AnimatorToggler(_animator);
-        
+
         _health.Initialize();
         _fighter.Initialize(_animatorToggler, _health);
         _enemyMover.Initialize(_animatorToggler);
@@ -24,8 +24,11 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        _enemyMover.enabled = false;
-        _fighter.enabled = false;
-        _animatorToggler.SetDieBool();
+        if (_health.Value <= 0)
+        {
+            _enemyMover.enabled = false;
+            _fighter.enabled = false;
+            _animatorToggler.SetDieBool();
+        }
     }
 }

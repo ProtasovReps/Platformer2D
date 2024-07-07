@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerMover : MonoBehaviour
 {
     private const string Horizontal = nameof(Horizontal);
-    private const string Vertical = nameof(Vertical);
 
     [SerializeField] private LayerChecker _layerChecker;
 
@@ -52,7 +51,7 @@ public class PlayerMover : MonoBehaviour
 
         _animatorToggler.SetFallingBool(isGrounded == false);
 
-        if (isGrounded && Input.GetButtonDown(Vertical))
+        if (isGrounded && Input.GetKeyDown(KeyCode.UpArrow))
         {
             _animatorToggler.SetJumpTrigger();
             _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
