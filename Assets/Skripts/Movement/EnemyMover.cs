@@ -1,21 +1,19 @@
 using UnityEngine;
 
-public class EnemyMover : MonoBehaviour
+public class EnemyMover : CharacterMover
 {
     [SerializeField] private LayerChecker _groundChecker;
     [SerializeField] private float _moveSpeed;
      
     private AnimatorToggler _animatorToggler;
 
-    public void Initialize(AnimatorToggler animatorToggler)
+    public override void Initialize(AnimatorToggler animatorToggler)
     {
         _animatorToggler = animatorToggler;
         _animatorToggler.SetRunBool(true);
     }
 
-    private void Update() => Patrol();
-
-    private void Patrol()
+    protected override void Move()
     {
         if (_groundChecker.CheckGround() == false)
             Rotate();
@@ -23,11 +21,13 @@ public class EnemyMover : MonoBehaviour
         transform.Translate(transform.right * _moveSpeed * Time.deltaTime, Space.World);
     }
 
-    private void Rotate()
+    protected override void Rotate()
     {
         if (transform.rotation.y > 0)
             transform.rotation = Quaternion.Euler(Vector3.zero);
         else
             transform.rotation = Quaternion.Euler(new Vector3(0, 180));
     }
+
+    private void Update() => Move();
 }

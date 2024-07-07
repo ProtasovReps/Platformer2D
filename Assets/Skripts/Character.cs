@@ -1,23 +1,21 @@
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Character : MonoBehaviour
 {
     [SerializeField] private Health _health;
     [SerializeField] private Fighter _fighter;
-    [SerializeField] private EnemyMover _enemyMover;
+    [SerializeField] private CharacterMover _characterMover;
     [SerializeField] private Animator _animator;
 
     private AnimatorToggler _animatorToggler;
 
-    private void Awake() => Initialize();
-
-    private void Initialize()
+    public void Initialize()
     {
         _animatorToggler = new AnimatorToggler(_animator);
 
         _health.Initialize();
         _fighter.Initialize(_animatorToggler, _health);
-        _enemyMover.Initialize(_animatorToggler);
+        _characterMover.Initialize(_animatorToggler);
 
         _health.AmountChanged += Die;
     }
@@ -26,7 +24,7 @@ public class Enemy : MonoBehaviour
     {
         if (_health.Value <= 0)
         {
-            _enemyMover.enabled = false;
+            _characterMover.enabled = false;
             _fighter.enabled = false;
             _animatorToggler.SetDieBool();
         }

@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollectibleSpawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private List<Collectible> _collectibles;
-    [SerializeField] private float _spawnDelay = 10f;
+    [SerializeField] private Character _enemy;
 
     private GroundPlatformStash _groundPlatformStash;
     private List<Ground> _groundPlatforms;
@@ -13,20 +12,6 @@ public class CollectibleSpawner : MonoBehaviour
     {
         _groundPlatformStash = groundPlatformStash;
         _groundPlatforms = _groundPlatformStash.GetPlatforms();
-        SpawnCollectiblesDelayed();
-    }
-
-    private void SpawnCollectiblesDelayed()
-    {
-        InvokeRepeating(nameof(SpawnCollectibleAtRandomPoint), 0f, _spawnDelay);
-    }
-
-    private void SpawnCollectibleAtRandomPoint()
-    {
-        int randomIndex = SelectRandomIndex(_collectibles.Count);
-        Collectible collectible = _collectibles[randomIndex];
-
-        collectible.Appear(GetRandomPosition());
     }
 
     private int SelectRandomIndex(int elementsCount) => Random.Range(0, elementsCount);
