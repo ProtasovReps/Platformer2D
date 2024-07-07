@@ -1,14 +1,12 @@
 using System;
 
-public class Wallet
+public class Wallet : Collector
 {
-    public event Action AmountChanged;
+    public override event Action AmountChanged;
 
-    public int CoinsCount { get; private set; }
-
-    public void AddCoin()
+    public override void Collect(int value)
     {
-        CoinsCount++;
+        Value += value;
         AmountChanged?.Invoke();
     }
 }

@@ -2,14 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CollectibleSpawner : MonoBehaviour
-{   
+{
     [SerializeField] private List<Ground> _groundPlatforms;
     [SerializeField] private List<Collectible> _collectibles;
-
-    private float _spawnDelay = 10f;
+    [SerializeField] private float _spawnDelay = 10f;
 
     public void Initialize() => SpawnCollectiblesDelayed();
-        
+
     private void SpawnCollectiblesDelayed()
     {
         InvokeRepeating(nameof(SpawnCollectibleAtRandomPoint), 0f, _spawnDelay);

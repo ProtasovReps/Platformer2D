@@ -1,26 +1,11 @@
+using System;
 using UnityEngine;
 
-public class Collector : MonoBehaviour
+public abstract class Collector : MonoBehaviour 
 {
-    [SerializeField] private WalletView _walletView;
+    public int Value {  get; protected set; }
 
-    private Wallet _wallet;
+    public abstract event Action AmountChanged;
 
-    public void Initialize()
-    {
-        _wallet = new Wallet();
-        _walletView.Initialize(_wallet);
-    }
-
-    public void AddMoney(Coin coin)
-    {
-        coin.Disappear();
-        _wallet.AddCoin();
-    }
-
-    public void Heal(Food food)
-    {
-        food.Disappear();
-        //_health.Heal
-    }
+    public abstract void Collect(int value);
 }

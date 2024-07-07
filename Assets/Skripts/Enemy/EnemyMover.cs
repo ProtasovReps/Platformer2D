@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class EnemyMover : MonoBehaviour
 {
-    [SerializeField] private GroundChecker _groundChecker;
+    [SerializeField] private LayerChecker _groundChecker;
     [SerializeField] private float _moveSpeed;
      
     private AnimatorToggler _animatorToggler;
 
-    public void Initialize(Animator animator)
+    public void Initialize(AnimatorToggler animatorToggler)
     {
-        _animatorToggler = new AnimatorToggler(animator);
+        _animatorToggler = animatorToggler;
         _animatorToggler.SetRunBool(true);
     }
 

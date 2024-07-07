@@ -2,25 +2,22 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(SpriteRenderer))]
 public class PlayerMover : MonoBehaviour
 {
     private const string Horizontal = nameof(Horizontal);
     private const string Vertical = nameof(Vertical);
 
-    [SerializeField] private GroundChecker _groundChecker;
+    [SerializeField] private LayerChecker _layerChecker;
 
     private AnimatorToggler _animatorToggler;
     private Rigidbody2D _rigidbody;
-    private SpriteRenderer _spriteRenderer;
     private float _moveSpeed = 14f;
     private float _jumpForce = 20f;
 
-    public void Initialize(Animator animator)
+    public void Initialize(AnimatorToggler animatorToggler)
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _animatorToggler = new AnimatorToggler(animator);
+        _animatorToggler = animatorToggler;
     }
 
     private void Update()
@@ -35,7 +32,7 @@ public class PlayerMover : MonoBehaviour
         float distance = GetHorizontalDirection() * _moveSpeed * Time.deltaTime;
 
         _animatorToggler.SetRunBool(Convert.ToBoolean(distance));
-        transform.Translate(Vector2.right * distance);
+        transform.Translate(Vector2.right * distance, Space.World);
     }
 
     private void Rotate()
@@ -43,15 +40,15 @@ public class PlayerMover : MonoBehaviour
         float direction = GetHorizontalDirection();
 
         if (direction > 0)
-            _spriteRenderer.flipX = false;
+            transform.rotation = Quaternion.Euler(Vector3.zero);
 
         if (direction < 0)
-            _spriteRenderer.flipX = true;
+            transform.rotation = Quaternion.Euler(0, 180f, 0);
     }
 
     private void Jump()
     {
-        bool isGrounded = _groundChecker.CheckGround();
+        bool isGrounded = _layerChecker.CheckGround();
 
         _animatorToggler.SetFallingBool(isGrounded == false);
 
