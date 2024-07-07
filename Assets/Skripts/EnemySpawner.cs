@@ -1,28 +1,61 @@
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private Character _enemy;
+    [SerializeField] private EnemyCharacter _enemy;
+    [SerializeField] private float _spawnDelay;
 
     private GroundPlatformStash _groundPlatformStash;
-    private List<Ground> _groundPlatforms;
+    private ObjectPool<EnemyCharacter> _pool;
 
     public void Initialize(GroundPlatformStash groundPlatformStash)
     {
         _groundPlatformStash = groundPlatformStash;
-        _groundPlatforms = _groundPlatformStash.GetPlatforms();
+        CreatePool();
+        StartCoroutine(GetEnemiesDelayed());
     }
 
-    private int SelectRandomIndex(int elementsCount) => Random.Range(0, elementsCount);
+    public void ReleaseEnemy(EnemyCharacter enemy) => _pool.Release(enemy);
 
-    private Vector2 GetRandomPosition()
+    private void CreatePool()
     {
-        Ground ground = _groundPlatforms[SelectRandomIndex(_groundPlatforms.Count)];
-        float positionY = ground.Position.y + 1.5f;
-        float startPointX = ground.Position.x - (ground.Scale.x / 2);
-        float endPointX = ground.Position.x + (ground.Scale.x / 2);
+        _pool = new ObjectPool<EnemyCharacter>(
+            createFunc: () => Create(),
+            actionOnGet: (enemy) => Get(enemy),
+            actionOnRelease: (enemy) => enemy.gameObject.SetActive(false),
+            actionOnDestroy: (enemy) => Destroy(enemy)
+            );
+    }
 
-        return new Vector2(Random.Range(startPointX, endPointX), positionY);
+    private EnemyCharacter Create()
+    {
+        EnemyCharacter enemy = Instantiate(_enemy);
+        enemy.Initialize(this);
+
+        return enemy;
+    }
+
+    private void Get(EnemyCharacter enemy)
+    {
+        float upPosition = 1.5f;
+        Vector2 randomPosition = _groundPlatformStash.GetRandomPlatform().GetRandomPosition(upPosition);
+        
+        enemy.transform.position = randomPosition;
+        enemy.gameObject.SetActive(true);
+        enemy.Revive();
+    }
+
+    private IEnumerator GetEnemiesDelayed()
+    {
+        var delay = new WaitForSeconds(_spawnDelay);
+        bool isWorking = true;
+
+        while (isWorking)
+        {
+            _pool.Get();
+            yield return delay;
+        }
     }
 }

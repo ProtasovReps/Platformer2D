@@ -4,17 +4,17 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public abstract class Collectible : MonoBehaviour
 {
-    private Coroutine _coroutine;
+    public int EffectValue { get; private set; }
 
-    public virtual void Appear(Vector2 position)
+    private Coroutine _coroutine;
+    private CollectibleSpawner _collectibleSpawner;
+
+    public void Initialize(CollectibleSpawner collectibleSpawner)
     {
-        transform.position = position;
-        gameObject.SetActive(true);
+        _collectibleSpawner = collectibleSpawner;
     }
 
     protected abstract void OnTriggerEnter2D(Collider2D collision);
-
-    protected abstract void ApplyEffect(Collector collector);
 
     protected void Follow(Collector collector)
     {
@@ -35,10 +35,13 @@ public abstract class Collectible : MonoBehaviour
             yield return null;
         }
 
-        Disappear();
+        _collectibleSpawner.ReleaseCollectible(this);
 
         _coroutine = null;
     }
 
-    private void Disappear() => gameObject.SetActive(false);
+    protected void SetRandomEffectValue(int minValue, int maxValue)
+    {
+        EffectValue = Random.Range(minValue, maxValue);
+    }
 }

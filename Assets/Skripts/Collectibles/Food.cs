@@ -2,20 +2,16 @@ using UnityEngine;
 
 public class Food : Collectible
 {
-    private int _minValue = 1;
-    private int _maxValue = 5;
+    private int _minHealValue = 1;
+    private int _maxHealValue = 5;
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out Health health))
         {
             Follow(health);
-            ApplyEffect(health);
+            SetRandomEffectValue(_minHealValue, _maxHealValue);
+            health.Collect(this);
         }
-    }
-
-    protected override void ApplyEffect(Collector collector)
-    {
-        collector.Collect(Random.Range(_minValue, _maxValue));
     }
 }

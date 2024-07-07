@@ -12,7 +12,7 @@ public class AnimatorToggler
 
     public void SetJumpTrigger() => _animator.SetTrigger(AnimatorConstants.Jump.ToString());
 
-    public void SetDieBool() => _animator.SetBool(AnimatorConstants.IsDead.ToString(), true);
+    public void SetDieBool(bool isDied) => _animator.SetBool(AnimatorConstants.IsDead.ToString(), isDied);
 
     public void SetRunBool(bool isRunning) => _animator.SetBool(AnimatorConstants.IsRunning.ToString(), isRunning);
 

@@ -3,18 +3,21 @@ using UnityEngine;
 
 public class Health : Collector
 {
-    private int _maxValue;
+    [SerializeField] private int _maxValue = 5;
+   
     public override event Action AmountChanged;
 
     public void Initialize()
     {
-        Value = 5;
+        Revive();
         _maxValue = Value;
     }
 
-    public override void Collect(int value)
+    public void Revive() => Value = _maxValue;
+
+    public override void Collect(Collectible collectible)
     {
-        Value += value;
+        base.Collect(collectible);
         Value = Mathf.Clamp(Value, 0, _maxValue);
         AmountChanged?.Invoke();
     }

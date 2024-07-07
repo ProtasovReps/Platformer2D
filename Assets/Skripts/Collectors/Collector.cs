@@ -7,5 +7,8 @@ public abstract class Collector : MonoBehaviour
 
     public abstract event Action AmountChanged;
 
-    public abstract void Collect(int value);
+    public virtual void Collect(Collectible collectible)
+    {
+        Value += collectible.EffectValue;
+    }
 }

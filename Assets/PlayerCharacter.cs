@@ -1,21 +1,20 @@
 using UnityEngine;
 
-public class Character : MonoBehaviour
+public class PlayerCharacter : MonoBehaviour
 {
     [SerializeField] private Health _health;
     [SerializeField] private Fighter _fighter;
-    [SerializeField] private CharacterMover _characterMover;
+    [SerializeField] private PlayerMover _playerMover;
     [SerializeField] private Animator _animator;
 
     private AnimatorToggler _animatorToggler;
 
     public void Initialize()
     {
-        _animatorToggler = new AnimatorToggler(_animator);
-
         _health.Initialize();
+        _animatorToggler = new AnimatorToggler(_animator);
+        _playerMover.Initialize(_animatorToggler);
         _fighter.Initialize(_animatorToggler, _health);
-        _characterMover.Initialize(_animatorToggler);
 
         _health.AmountChanged += Die;
     }
@@ -24,9 +23,10 @@ public class Character : MonoBehaviour
     {
         if (_health.Value <= 0)
         {
-            _characterMover.enabled = false;
+            _playerMover.enabled = false;
             _fighter.enabled = false;
-            _animatorToggler.SetDieBool();
+
+            _animatorToggler.SetDieBool(true);
         }
     }
 }

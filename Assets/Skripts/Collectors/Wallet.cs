@@ -4,9 +4,9 @@ public class Wallet : Collector
 {
     public override event Action AmountChanged;
 
-    public override void Collect(int value)
+    public override void Collect(Collectible collectible)
     {
-        Value += value;
+        base.Collect(collectible);
         AmountChanged?.Invoke();
     }
 }

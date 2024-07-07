@@ -1,23 +1,19 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GroundPlatformStash : MonoBehaviour
 {
-    private List<Ground> _groundPlatforms;
+    [SerializeField] private List<Ground> _groundPlatforms;
 
-    public void Initialize()
+    public Ground GetRandomPlatform()
     {
-        _groundPlatforms = new List<Ground>();
-        _groundPlatforms.AddRange(gameObject.GetComponentsInChildren<Ground>()); 
-    }
+        int randomIndex = UnityEngine.Random.Range(0, _groundPlatforms.Count);
+        Ground ground = _groundPlatforms[randomIndex];
 
-    public List<Ground> GetPlatforms()
-    {
-        var groundPlatforms = new List<Ground>();
-
-        foreach (var ground in _groundPlatforms)
-            groundPlatforms.Add(ground);
-
-        return groundPlatforms;
+        if (ground != null)
+            return ground;
+        else
+            throw new ArgumentNullException();
     }
 }

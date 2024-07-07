@@ -2,16 +2,18 @@ using UnityEngine;
 
 public class CompositeRoot : MonoBehaviour
 {
-    [SerializeField] private Character _player;
+    [SerializeField] private PlayerCharacter _player;
     [SerializeField] private UserInterface _userInterface;
-    [SerializeField] private GroundPlatformStash _groundPlatformStash;
     [SerializeField] private CollectibleSpawner _collectibleSpawner;
+    [SerializeField] private EnemySpawner _enemySpawner;
+    [SerializeField] private GroundPlatformStash _groundPlatformStash;
+    [SerializeField] private CollectibleStash _collectibleStash;
 
     private void Awake()
     {
         _player.Initialize();
-        _groundPlatformStash.Initialize();
-        _collectibleSpawner.Initialize(_groundPlatformStash);
+        _enemySpawner.Initialize(_groundPlatformStash);
+        _collectibleSpawner.Initialize(_groundPlatformStash, _collectibleStash);
         _userInterface.Initialize();
     }
 }

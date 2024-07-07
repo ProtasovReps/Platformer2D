@@ -1,43 +1,61 @@
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class CollectibleSpawner : MonoBehaviour
 {
-    [SerializeField] private List<Collectible> _collectibles;
     [SerializeField] private float _spawnDelay = 10f;
 
     private GroundPlatformStash _groundPlatformStash;
-    private List<Ground> _groundPlatforms;
+    private CollectibleStash _collectibleStash;
+    private ObjectPool<Collectible> _pool;
 
-    public void Initialize(GroundPlatformStash groundPlatformStash)
+    public void Initialize(GroundPlatformStash groundPlatformStash, CollectibleStash collectibleStash)
     {
+        _collectibleStash = collectibleStash;
         _groundPlatformStash = groundPlatformStash;
-        _groundPlatforms = _groundPlatformStash.GetPlatforms();
-        SpawnCollectiblesDelayed();
+        CreatePool();
+        StartCoroutine(GetCollectiblesDelayed());
     }
 
-    private void SpawnCollectiblesDelayed()
+    public void ReleaseCollectible(Collectible collectible) => _pool.Release(collectible);
+
+    private void CreatePool()
     {
-        InvokeRepeating(nameof(SpawnCollectibleAtRandomPoint), 0f, _spawnDelay);
+        _pool = new ObjectPool<Collectible>(
+            createFunc: () => Create(),
+            actionOnGet: (collectible) => Get(collectible),
+            actionOnRelease: (collectible) => collectible.gameObject.SetActive(false),
+            actionOnDestroy: (collectible) => Destroy(collectible)
+            );
     }
 
-    private void SpawnCollectibleAtRandomPoint()
+    private Collectible Create()
     {
-        int randomIndex = SelectRandomIndex(_collectibles.Count);
-        Collectible collectible = _collectibles[randomIndex];
+        Collectible collectible = Instantiate(_collectibleStash.GetRandomCollectible());
+        collectible.Initialize(this);
 
-        collectible.Appear(GetRandomPosition());
+        return collectible;
     }
 
-    private int SelectRandomIndex(int elementsCount) => Random.Range(0, elementsCount);
-
-    private Vector2 GetRandomPosition()
+    private void Get(Collectible collectible)
     {
-        Ground ground = _groundPlatforms[SelectRandomIndex(_groundPlatforms.Count)];
-        float positionY = ground.Position.y + 1.5f;
-        float startPointX = ground.Position.x - (ground.Scale.x / 2);
-        float endPointX = ground.Position.x + (ground.Scale.x / 2);
+        float upPosition = 1.5f;
+        Vector2 randomPosition = _groundPlatformStash.GetRandomPlatform().GetRandomPosition(upPosition);
 
-        return new Vector2(Random.Range(startPointX, endPointX), positionY);
+        collectible.transform.position = randomPosition;
+        collectible.gameObject.SetActive(true);
+    }
+
+    private IEnumerator GetCollectiblesDelayed()
+    {
+        var delay = new WaitForSeconds(_spawnDelay);
+        bool isWorking = true;
+
+        while (isWorking)
+        {
+            _pool.Get();
+            yield return delay;
+        }
     }
 }
