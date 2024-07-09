@@ -1,30 +1,38 @@
 using System;
 using UnityEngine;
 
-public class Health : Collector
+public class Health : ICollector
 {
-    [SerializeField] private int _maxValue = 5;
-   
-    public override event Action AmountChanged;
+    [SerializeField, Min(1)] private int _maxValue = 5;
 
-    public void Initialize()
+    public Health()
     {
         Revive();
-        _maxValue = Value;
     }
 
+    public event Action Died;
+
+    public int Value { get; private set; }
+    
     public void Revive() => Value = _maxValue;
 
-    public override void Collect(Collectible collectible)
+    public void Collect(Collectible collectible)
     {
-        base.Collect(collectible);
-        Value = Mathf.Clamp(Value, 0, _maxValue);
-        AmountChanged?.Invoke();
+        if (collectible.EffectValue < 0)
+            throw new ArgumentOutOfRangeException(nameof(collectible));
+        
+        if (collectible.Type == CollectibleTypes.Medicine)
+            Value = Mathf.Clamp(Value, 0, _maxValue);
     }
 
     public void TakeDamage(int damage)
     {
+        if (damage < 0)
+            throw new ArgumentOutOfRangeException(nameof(damage));
+
         Value -= damage;
-        AmountChanged?.Invoke();
+
+        if (Value <= 0)
+            Died?.Invoke();
     }
 }

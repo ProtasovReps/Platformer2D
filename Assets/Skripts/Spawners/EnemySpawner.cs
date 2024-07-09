@@ -4,47 +4,30 @@ using UnityEngine.Pool;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private EnemyCharacter _enemy;
-    [SerializeField] private float _spawnDelay;
+    [SerializeField] private Enemy _enemy;
+    [SerializeField, Min(1)] private float _spawnDelay;
 
     private GroundPlatformStash _groundPlatformStash;
-    private ObjectPool<EnemyCharacter> _pool;
+    private ObjectPool<Enemy> _pool;
 
     public void Initialize(GroundPlatformStash groundPlatformStash)
     {
         _groundPlatformStash = groundPlatformStash;
+
         CreatePool();
         StartCoroutine(GetEnemiesDelayed());
     }
 
-    public void ReleaseEnemy(EnemyCharacter enemy) => _pool.Release(enemy);
+    public void ReleaseEnemy(Enemy enemy) => _pool.Release(enemy);
 
     private void CreatePool()
     {
-        _pool = new ObjectPool<EnemyCharacter>(
+        _pool = new ObjectPool<Enemy>(
             createFunc: () => Create(),
             actionOnGet: (enemy) => Get(enemy),
             actionOnRelease: (enemy) => enemy.gameObject.SetActive(false),
             actionOnDestroy: (enemy) => Destroy(enemy)
             );
-    }
-
-    private EnemyCharacter Create()
-    {
-        EnemyCharacter enemy = Instantiate(_enemy);
-        enemy.Initialize(this);
-
-        return enemy;
-    }
-
-    private void Get(EnemyCharacter enemy)
-    {
-        float upPosition = 1.5f;
-        Vector2 randomPosition = _groundPlatformStash.GetRandomPlatform().GetRandomPosition(upPosition);
-        
-        enemy.transform.position = randomPosition;
-        enemy.gameObject.SetActive(true);
-        enemy.Revive();
     }
 
     private IEnumerator GetEnemiesDelayed()
@@ -57,5 +40,23 @@ public class EnemySpawner : MonoBehaviour
             _pool.Get();
             yield return delay;
         }
+    }
+
+    private Enemy Create()
+    {
+        Enemy enemy = Instantiate(_enemy);
+        enemy.Initialize(this);
+
+        return enemy;
+    }
+
+    private void Get(Enemy enemy)
+    {
+        float upPosition = 1.5f;
+        Vector2 randomPosition = _groundPlatformStash.GetRandomPlatform().GetRandomPosition(upPosition);
+        
+        enemy.transform.position = randomPosition;
+        enemy.gameObject.SetActive(true);
+        enemy.Revive();
     }
 }

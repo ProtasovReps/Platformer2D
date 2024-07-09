@@ -2,16 +2,19 @@ using UnityEngine;
 
 public class Food : Collectible
 {
-    private int _minHealValue = 1;
-    private int _maxHealValue = 5;
+    [SerializeField, Min(1)] private int _minHealValue = 1;
+    [SerializeField, Min(1)] private int _maxHealValue = 5;
+
+    public override CollectibleTypes Type => CollectibleTypes.Medicine;
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out Health health))
+        if (collision.TryGetComponent(out Player player))
         {
-            Follow(health);
+            Follow(player);
             SetRandomEffectValue(_minHealValue, _maxHealValue);
-            health.Collect(this);
+
+            player.Health.Collect(this);
         }
     }
 }

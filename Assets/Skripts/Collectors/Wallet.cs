@@ -1,12 +1,21 @@
 using System;
 
-public class Wallet : Collector
+public class Wallet : ICollector
 {
-    public override event Action AmountChanged;
+    public event Action AmountChanged;
 
-    public override void Collect(Collectible collectible)
+    public int Value { get; private set; }
+
+    public void Collect(Collectible collectible)
     {
-        base.Collect(collectible);
-        AmountChanged?.Invoke();
+        if (collectible.EffectValue < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(collectible));
+        }
+        else if (collectible.Type == CollectibleTypes.Money)
+        {
+            Value += collectible.EffectValue;
+            AmountChanged?.Invoke();
+        }
     }
 }

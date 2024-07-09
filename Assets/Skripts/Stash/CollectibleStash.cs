@@ -14,6 +14,6 @@ public class CollectibleStash : MonoBehaviour
         if (collectible != null)
             return collectible;
         else
-            throw new ArgumentNullException();
+            throw new ArgumentNullException(nameof(collectible));
     }
 }

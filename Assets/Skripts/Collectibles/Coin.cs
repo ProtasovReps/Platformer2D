@@ -2,16 +2,19 @@ using UnityEngine;
 
 public class Coin : Collectible
 {
-    private int _minCostValue = 1;
-    private int _maxCostValue = 3;
+    [SerializeField, Min(1)] private int _minCostValue = 1;
+    [SerializeField, Min(1)] private int _maxCostValue = 3;
+    
+    public override CollectibleTypes Type => CollectibleTypes.Money;
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out Wallet wallet))
+        if (collision.TryGetComponent(out Player player))
         {
-            Follow(wallet);
+            Follow(player);
             SetRandomEffectValue(_minCostValue, _maxCostValue);
-            wallet.Collect(this);
+
+            player.Wallet.Collect(this);
         }
     }
 }

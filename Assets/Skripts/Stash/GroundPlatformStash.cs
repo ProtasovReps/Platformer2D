@@ -14,6 +14,6 @@ public class GroundPlatformStash : MonoBehaviour
         if (ground != null)
             return ground;
         else
-            throw new ArgumentNullException();
+            throw new ArgumentNullException(nameof(ground));
     }
 }

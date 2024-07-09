@@ -14,6 +14,7 @@ public class CollectibleSpawner : MonoBehaviour
     {
         _collectibleStash = collectibleStash;
         _groundPlatformStash = groundPlatformStash;
+        
         CreatePool();
         StartCoroutine(GetCollectiblesDelayed());
     }
@@ -30,23 +31,6 @@ public class CollectibleSpawner : MonoBehaviour
             );
     }
 
-    private Collectible Create()
-    {
-        Collectible collectible = Instantiate(_collectibleStash.GetRandomCollectible());
-        collectible.Initialize(this);
-
-        return collectible;
-    }
-
-    private void Get(Collectible collectible)
-    {
-        float upPosition = 1.5f;
-        Vector2 randomPosition = _groundPlatformStash.GetRandomPlatform().GetRandomPosition(upPosition);
-
-        collectible.transform.position = randomPosition;
-        collectible.gameObject.SetActive(true);
-    }
-
     private IEnumerator GetCollectiblesDelayed()
     {
         var delay = new WaitForSeconds(_spawnDelay);
@@ -57,5 +41,21 @@ public class CollectibleSpawner : MonoBehaviour
             _pool.Get();
             yield return delay;
         }
+    }
+
+    private Collectible Create()
+    {
+        Collectible collectible = Instantiate(_collectibleStash.GetRandomCollectible());
+        collectible.Initialize(this);
+        return collectible;
+    }
+
+    private void Get(Collectible collectible)
+    {
+        float upPosition = 1.5f;
+        Vector2 randomPosition = _groundPlatformStash.GetRandomPlatform().GetRandomPosition(upPosition);
+
+        collectible.transform.position = randomPosition;
+        collectible.gameObject.SetActive(true);
     }
 }

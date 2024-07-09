@@ -13,12 +13,10 @@ GameObject:
   - component: {fileID: 1459707755054692474}
   - component: {fileID: 3361992451659927760}
   - component: {fileID: 5507037875741779226}
-  - component: {fileID: 8206571663203350532}
-  - component: {fileID: 2462464197995418190}
-  - component: {fileID: 6694448022434489089}
+  - component: {fileID: 5128981408489586639}
   - component: {fileID: 4114653415320664628}
   - component: {fileID: 9016500065282732423}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Samurai
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,8 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70993efc20dd39144bef2a898bebfc46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 2462464197995418190}
-  _fighter: {fileID: 6694448022434489089}
+  _playerFighter: {fileID: 5128981408489586639}
   _playerMover: {fileID: 5507037875741779226}
   _animator: {fileID: 1459707755054692474}
 --- !u!114 &5507037875741779226
@@ -146,7 +143,7 @@ MonoBehaviour:
   _groundChecker: {fileID: 2429334294013824594}
   _moveSpeed: 14
   _jumpForce: 20
---- !u!114 &8206571663203350532
+--- !u!114 &5128981408489586639
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -155,35 +152,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3343888102086334684}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a096d95c41cc80348b26fab482a4cb76, type: 3}
+  m_Script: {fileID: 11500000, guid: 724bd23b713b2324a9574f1e80896b73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2462464197995418190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3343888102086334684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab88575a374bd1d42a5b832cd18391d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6694448022434489089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3343888102086334684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d71c884c4a58ce04c86916c6b65b27a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _layerCheker: {fileID: 6797438982298282011}
-  _maxDamage: 5
+  _enemyCheker: {fileID: 6797438982298282011}
+  _maxDamage: 4
 --- !u!70 &4114653415320664628
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -256,7 +229,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6665174805089916495}
   - component: {fileID: 2429334294013824594}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: GroundChecker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -300,8 +273,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8824877207903223633}
   - component: {fileID: 6797438982298282011}
-  m_Layer: 6
-  m_Name: AttackZone
+  m_Layer: 7
+  m_Name: EnemyChecker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
