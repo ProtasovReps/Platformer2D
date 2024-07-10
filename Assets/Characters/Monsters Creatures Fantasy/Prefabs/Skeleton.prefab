@@ -263,6 +263,7 @@ MonoBehaviour:
   _animator: {fileID: 8598393806575199878}
   _enemyFighter: {fileID: 836579016940269868}
   _enemyMover: {fileID: 5795797820962988724}
+  _maxHealth: 1
 --- !u!114 &5795797820962988724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,9 +293,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerChecker: {fileID: 4222747422436961144}
+  _enemyVision: {fileID: 7172654581993831581}
   _maxDamage: 3
   _attackDelay: 1
-  _enemyVision: {fileID: 7172654581993831581}
 --- !u!50 &7658961984558970983
 Rigidbody2D:
   serializedVersion: 4

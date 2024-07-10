@@ -5,6 +5,7 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerFighter _playerFighter;
     [SerializeField] private PlayerMover _playerMover;
     [SerializeField] private Animator _animator;
+    [SerializeField, Min(1)] private int _maxHealth;
 
     private AnimatorToggler _animatorToggler;
 
@@ -13,7 +14,7 @@ public class Player : MonoBehaviour
 
     public void Initialize()
     {
-        Health = new Health();
+        Health = new Health(_maxHealth);
         Wallet = new Wallet();
         _animatorToggler = new AnimatorToggler(_animator);
 

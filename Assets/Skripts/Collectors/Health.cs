@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class Health : ICollector
 {
-    [SerializeField, Min(1)] private int _maxValue = 5;
+    private int _maxValue;
 
-    public Health()
+    public Health(int maxValue)
     {
+        _maxValue = maxValue;
         Revive();
     }
 

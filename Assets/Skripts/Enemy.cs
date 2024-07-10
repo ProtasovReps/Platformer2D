@@ -5,6 +5,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private EnemyFighter _enemyFighter;
     [SerializeField] private EnemyMover _enemyMover;
+    [SerializeField, Min(1)] private int _maxHealth;
 
     private AnimatorToggler _animatorToggler;
     private EnemySpawner _enemySpawner;
@@ -13,7 +14,7 @@ public class Enemy : MonoBehaviour
     public void Initialize(EnemySpawner enemySpawner)
     {
         _enemySpawner = enemySpawner;
-        _health = new Health();
+        _health = new Health(_maxHealth);
         _animatorToggler = new AnimatorToggler(_animator);
 
         _enemyMover.Initialize(_animatorToggler);
