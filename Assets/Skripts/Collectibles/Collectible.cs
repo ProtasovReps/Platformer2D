@@ -27,7 +27,7 @@ public abstract class Collectible : MonoBehaviour
         int randomEffectValue = UnityEngine.Random.Range(minValue, maxValue);
 
         if (randomEffectValue < 0)
-            throw new ArgumentOutOfRangeException(nameof(gameObject));
+            throw new ArgumentOutOfRangeException(nameof(randomEffectValue));
 
         EffectValue = randomEffectValue;
     }
