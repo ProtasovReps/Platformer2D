@@ -4,10 +4,9 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private EnemyFighter _enemyFighter;
-    [SerializeField] private EnemyMover _enemyMover;
+    [SerializeField] private EnemyMovement _enemyMover;
     [SerializeField, Min(1)] private int _maxHealth;
 
-    private AnimatorToggler _animatorToggler;
     private EnemySpawner _enemySpawner;
     private Health _health;
 
@@ -15,10 +14,9 @@ public class Enemy : MonoBehaviour
     {
         _enemySpawner = enemySpawner;
         _health = new Health(_maxHealth);
-        _animatorToggler = new AnimatorToggler(_animator);
 
-        _enemyMover.Initialize(_animatorToggler);
-        _enemyFighter.Initialize(_animatorToggler, _health);
+        _enemyMover.Initialize(_animator);
+        _enemyFighter.Initialize(_animator, _health);
         
         _health.Died += Die;
     }
@@ -26,13 +24,13 @@ public class Enemy : MonoBehaviour
     public void Revive()
     {
         _health.Revive();
-        _animatorToggler.SetDieBool(false);
-        _animatorToggler.SetRunBool(true);
+        _animator.SetBool(AnimatorConstants.IsDead.ToString(), false);
+        _animator.SetBool(AnimatorConstants.IsRunning.ToString(), true);
     }
 
     private void Die()
     {
         _enemySpawner.ReleaseEnemy(this);
-        _animatorToggler.SetDieBool(true);
+        _animator.SetBool(AnimatorConstants.IsDead.ToString(), true);
     }
 }

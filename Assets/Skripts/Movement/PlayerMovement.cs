@@ -2,22 +2,22 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerMover : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     private const string Horizontal = nameof(Horizontal);
     
     [SerializeField, Min(1)] private float _moveSpeed = 14f;
     [SerializeField, Min(1)] private float _jumpForce = 20f;
-    [SerializeField] private LayerChecker _groundChecker;
+    [SerializeField] private GroundChecker _groundChecker;
 
-    private AnimatorToggler _animatorToggler;
+    private Animator _animator;
     private Rigidbody2D _rigidbody;
     private float _horizontalDirection;
 
-    public void Initialize(AnimatorToggler animatorToggler)
+    public void Initialize(Animator animator)
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _animatorToggler = animatorToggler;
+        _animator = animator;
     }
 
     private void Update()
@@ -42,7 +42,7 @@ public class PlayerMover : MonoBehaviour
     {
         float distance = _horizontalDirection * _moveSpeed * Time.deltaTime;
 
-        _animatorToggler.SetRunBool(Convert.ToBoolean(distance));
+        _animator.SetBool(AnimatorConstants.IsRunning.ToString(), Convert.ToBoolean(distance));
         transform.Translate(Vector2.right * distance, Space.World);
     }
 
@@ -50,11 +50,11 @@ public class PlayerMover : MonoBehaviour
     {
         bool isGrounded = _groundChecker.CheckGround();
 
-        _animatorToggler.SetFallingBool(isGrounded == false);
+        _animator.SetBool(AnimatorConstants.IsFalling.ToString(), isGrounded == false);
 
         if (isGrounded && Input.GetKeyDown(KeyCode.UpArrow))
         {
-            _animatorToggler.SetJumpTrigger();
+            _animator.SetTrigger(AnimatorConstants.Jump.ToString());
             _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
         }
     }

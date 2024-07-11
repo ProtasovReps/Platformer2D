@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class EnemyFighter : Fighter
 {
-    [SerializeField] private LayerChecker _playerChecker;
+    [SerializeField] private ColliderFinder _colliderFinder;
     [SerializeField] private EnemyVision _enemyVision;
     [SerializeField, Min(1)] private int _maxDamage;
     [SerializeField, Min(0.5f)] private float _attackDelay;
 
     private Health _health;
-    private AnimatorToggler _animatorToggler;
+    private Animator _animator;
     private Coroutine _coroutine;
     private WaitForSeconds _delay;
 
@@ -23,36 +23,19 @@ public class EnemyFighter : Fighter
     {
         _enemyVision.PlayerFound -= StartAttackDelayed;
         _enemyVision.PlayerLost -= StopAttackDelayed;
-
-        StopAttackDelayed();
     }
 
-    public void Initialize(AnimatorToggler animatorToggler, Health health)
+    public void Initialize(Animator animator, Health health)
     {
         _delay = new WaitForSeconds(_attackDelay);
-        _animatorToggler = animatorToggler;
+        _animator = animator;
         _health = health;
     }
 
     public override void TakeDamage(int value)
     {
-        _animatorToggler.SetTakeHitTrigger();
+        _animator.SetTrigger(AnimatorConstants.TakeHit.ToString());
         _health.TakeDamage(value);
-    }
-
-    protected override void Attack()
-    {
-        Collider2D collider = _playerChecker.CheckPlayer();
-
-        _animatorToggler.SetAttackTrigger();
-
-        if (collider != null)
-        {
-            if (collider.TryGetComponent(out PlayerFighter playerFighter))
-            {
-                playerFighter.TakeDamage(GetRandomDamage(_maxDamage));
-            }
-        }
     }
 
     private void StartAttackDelayed()
@@ -71,7 +54,7 @@ public class EnemyFighter : Fighter
     {
         while (enabled)
         {
-            Attack();
+            Attack(_animator, _colliderFinder, _maxDamage);
             yield return _delay;
         }
     }

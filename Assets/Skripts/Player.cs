@@ -3,11 +3,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerFighter _playerFighter;
-    [SerializeField] private PlayerMover _playerMover;
+    [SerializeField] private PlayerMovement _playerMover;
     [SerializeField] private Animator _animator;
     [SerializeField, Min(1)] private int _maxHealth;
-
-    private AnimatorToggler _animatorToggler;
 
     public Health Health { get; private set; }
     public Wallet Wallet { get; private set; }
@@ -16,10 +14,9 @@ public class Player : MonoBehaviour
     {
         Health = new Health(_maxHealth);
         Wallet = new Wallet();
-        _animatorToggler = new AnimatorToggler(_animator);
 
-        _playerMover.Initialize(_animatorToggler);
-        _playerFighter.Initialize(_animatorToggler, Health);
+        _playerMover.Initialize(_animator);
+        _playerFighter.Initialize(_animator, Health);
 
         Health.Died += Die;
     }
@@ -29,6 +26,6 @@ public class Player : MonoBehaviour
         _playerMover.enabled = false;
         _playerFighter.enabled = false;
 
-        _animatorToggler.SetDieBool(true);
+        _animator.SetBool(AnimatorConstants.IsDead.ToString(), true);
     }
 }

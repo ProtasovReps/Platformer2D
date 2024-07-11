@@ -1,15 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
-public class EnemyMover : MonoBehaviour
+public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField] private LayerChecker _groundCheker;
-    [SerializeField] private LayerChecker _playerCheker;
+    [SerializeField] private GroundChecker _groundCheker;
     [SerializeField] private EnemyVision _enemyVision;
     [SerializeField, Min(1)] private float _moveSpeed;
 
     private Coroutine _coroutine;
-    private AnimatorToggler _animatorToggler;
+    private Animator _animator;
 
     private void OnEnable()
     {
@@ -25,10 +24,10 @@ public class EnemyMover : MonoBehaviour
         _enemyVision.PlayerLost -= StartPatrolling;
     }
 
-    public void Initialize(AnimatorToggler animatorToggler)
+    public void Initialize(Animator animator)
     {
-        _animatorToggler = animatorToggler;
-        _animatorToggler.SetRunBool(true);
+        _animator = animator;
+        _animator.SetBool(AnimatorConstants.IsRunning.ToString(), true);
     }
 
     private void StartPatrolling()
@@ -58,9 +57,6 @@ public class EnemyMover : MonoBehaviour
         while (enabled)
         {
             if (_groundCheker.CheckGround() == false)
-                Rotate();
-
-            if (_playerCheker.CheckEnemy())
                 Rotate();
 
             transform.Translate(transform.right * _moveSpeed * Time.deltaTime, Space.World);

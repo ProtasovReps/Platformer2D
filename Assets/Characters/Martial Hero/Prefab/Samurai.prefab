@@ -128,6 +128,7 @@ MonoBehaviour:
   _playerFighter: {fileID: 5128981408489586639}
   _playerMover: {fileID: 5507037875741779226}
   _animator: {fileID: 1459707755054692474}
+  _maxHealth: 0
 --- !u!114 &5507037875741779226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,9 +141,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de3de5eb6ca88154b8e58d6381cd4217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _groundChecker: {fileID: 2429334294013824594}
   _moveSpeed: 14
   _jumpForce: 20
+  _groundChecker: {fileID: 2429334294013824594}
 --- !u!114 &5128981408489586639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 724bd23b713b2324a9574f1e80896b73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyCheker: {fileID: 6797438982298282011}
+  _colliderFinder: {fileID: 6114768523950838490}
   _maxDamage: 4
 --- !u!70 &4114653415320664628
 CapsuleCollider2D:
@@ -272,9 +273,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8824877207903223633}
-  - component: {fileID: 6797438982298282011}
+  - component: {fileID: 6114768523950838490}
   m_Layer: 7
-  m_Name: EnemyChecker
+  m_Name: ColliderFinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -295,7 +296,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2205864491909426692}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6797438982298282011
+--- !u!114 &6114768523950838490
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -304,6 +305,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6701129218110290100}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a118af5b9dcf5649b2b44a5394cbf1a, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f6370e08faafb34380293a76c2165c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _layersToCheck:
+    serializedVersion: 2
+    m_Bits: 64
