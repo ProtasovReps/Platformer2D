@@ -1264,7 +1264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemy: {fileID: 1450477042988284042, guid: e2afcfb9c35c08c46baaa2570571b404, type: 3}
-  _spawnDelay: 10
+  _spawnDelay: 3
 --- !u!4 &527989489
 Transform:
   m_ObjectHideFlags: 0
@@ -2431,7 +2431,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3361992451659927760, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
       propertyPath: _maxHealth
-      value: 21
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2462464197995418190, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}

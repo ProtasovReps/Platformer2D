@@ -23,6 +23,8 @@ public class EnemyFighter : Fighter
     {
         _enemyVision.PlayerFound -= StartAttackDelayed;
         _enemyVision.PlayerLost -= StopAttackDelayed;
+
+        StopAttackDelayed();
     }
 
     public void Initialize(Animator animator, Health health)

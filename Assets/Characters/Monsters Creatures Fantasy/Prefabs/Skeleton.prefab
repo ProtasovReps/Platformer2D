@@ -218,7 +218,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 4035959289877228764, guid: c5b15ca3a0987ac46b73e4a04e12eeb2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -266,7 +266,7 @@ MonoBehaviour:
   _animator: {fileID: 8598393806575199878}
   _enemyFighter: {fileID: 836579016940269868}
   _enemyMover: {fileID: 5795797820962988724}
-  _maxHealth: 5
+  _maxHealth: 6
 --- !u!114 &5795797820962988724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,7 +280,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _groundCheker: {fileID: 2256848607234544263}
-  _colliderFinder: {fileID: 4829050689172895776}
   _enemyVision: {fileID: 7172654581993831581}
   _moveSpeed: 2
 --- !u!114 &836579016940269868
@@ -297,7 +296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _colliderFinder: {fileID: 4829050689172895776}
   _enemyVision: {fileID: 7172654581993831581}
-  _maxDamage: 3
+  _maxDamage: 5
   _attackDelay: 1
 --- !u!50 &7658961984558970983
 Rigidbody2D:
