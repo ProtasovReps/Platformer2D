@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -26,7 +25,7 @@ public class EnemySpawner : MonoBehaviour
         _pool = new ObjectPool<Enemy>(
             createFunc: () => Create(),
             actionOnGet: (enemy) => Get(enemy),
-            actionOnRelease: (enemy) => enemy.gameObject.SetActive(false),
+            actionOnRelease: (enemy) => enemy.Die(),
             actionOnDestroy: (enemy) => Destroy(enemy)
             );
     }
@@ -57,7 +56,6 @@ public class EnemySpawner : MonoBehaviour
         Vector2 randomPosition = _groundPlatformStash.GetRandomPlatform().GetRandomPosition(upPosition);
         
         enemy.transform.position = randomPosition;
-        enemy.gameObject.SetActive(true);
         enemy.Revive();
     }
 }
