@@ -4,7 +4,7 @@ public abstract class Fighter : MonoBehaviour
 {
     public abstract void TakeDamage(int value);
 
-    protected void Attack(Animator animator, ColliderFinder colliderFinder, int maxDamage)
+    public void Attack(Animator animator, ColliderFinder colliderFinder, int maxDamage)
     {
         if (colliderFinder.TryGetCollider(out Collider2D collider))
         {

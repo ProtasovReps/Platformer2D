@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7465344901116677045}
   - component: {fileID: 1459707755054692474}
   - component: {fileID: 3361992451659927760}
+  - component: {fileID: 6533471490553978561}
+  - component: {fileID: 1208234584414089879}
   - component: {fileID: 5507037875741779226}
   - component: {fileID: 5128981408489586639}
   - component: {fileID: 4114653415320664628}
@@ -125,10 +127,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70993efc20dd39144bef2a898bebfc46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerFighter: {fileID: 5128981408489586639}
-  _playerMover: {fileID: 5507037875741779226}
+  _playerInteraction: {fileID: 6533471490553978561}
   _animator: {fileID: 1459707755054692474}
-  _maxHealth: 0
+  _maxHealth: 3
+--- !u!114 &6533471490553978561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3343888102086334684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b94485208aa26274389989161deda5ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerFighter: {fileID: 5128981408489586639}
+  _playerMovement: {fileID: 5507037875741779226}
+  _groundChecker: {fileID: 2429334294013824594}
+  _colliderFinder: {fileID: 6114768523950838490}
+  _inputReader: {fileID: 1208234584414089879}
+--- !u!114 &1208234584414089879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3343888102086334684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 872040415b7b1534c9f31cb158355f2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5507037875741779226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,7 +173,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 14
   _jumpForce: 20
-  _groundChecker: {fileID: 2429334294013824594}
 --- !u!114 &5128981408489586639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,7 +185,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 724bd23b713b2324a9574f1e80896b73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _colliderFinder: {fileID: 6114768523950838490}
   _maxDamage: 4
 --- !u!70 &4114653415320664628
 CapsuleCollider2D:

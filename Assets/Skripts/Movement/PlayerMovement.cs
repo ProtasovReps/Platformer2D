@@ -4,15 +4,11 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
-    private const string Horizontal = nameof(Horizontal);
-    
     [SerializeField, Min(1)] private float _moveSpeed = 14f;
     [SerializeField, Min(1)] private float _jumpForce = 20f;
-    [SerializeField] private GroundChecker _groundChecker;
 
     private Animator _animator;
     private Rigidbody2D _rigidbody;
-    private float _horizontalDirection;
 
     public void Initialize(Animator animator)
     {
@@ -20,42 +16,30 @@ public class PlayerMovement : MonoBehaviour
         _animator = animator;
     }
 
-    private void Update()
+    public void Rotate(bool isGoingRight)
     {
-        _horizontalDirection = Input.GetAxisRaw(Horizontal);
-
-        Move();
-        Jump();
-        Rotate();
-    }
-
-    private void Rotate()
-    {
-        if (_horizontalDirection > 0)
+        if (isGoingRight)
             transform.rotation = Quaternion.Euler(Vector3.zero);
-
-        if (_horizontalDirection < 0)
+        else
             transform.rotation = Quaternion.Euler(0, 180f, 0);
     }
 
-    private void Move()
+    public void Move(float direction)
     {
-        float distance = _horizontalDirection * _moveSpeed * Time.deltaTime;
+        float distance = direction * _moveSpeed * Time.fixedDeltaTime;
 
-        _animator.SetBool(AnimatorConstants.IsRunning.ToString(), Convert.ToBoolean(distance));
+        _animator.SetBool(AnimatorConstants.IsRunning.ToString(), true);
         transform.Translate(Vector2.right * distance, Space.World);
     }
 
-    private void Jump()
+    public void Stay()
     {
-        bool isGrounded = _groundChecker.CheckGround();
+        _animator.SetBool(AnimatorConstants.IsRunning.ToString(), false);
+    }
 
-        _animator.SetBool(AnimatorConstants.IsFalling.ToString(), isGrounded == false);
-
-        if (isGrounded && Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            _animator.SetTrigger(AnimatorConstants.Jump.ToString());
-            _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
-        }
+    public void Jump()
+    {
+        _animator.SetTrigger(AnimatorConstants.Jump.ToString());
+        _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
     }
 }

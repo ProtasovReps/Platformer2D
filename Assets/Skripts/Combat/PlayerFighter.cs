@@ -2,18 +2,13 @@ using UnityEngine;
 
 public class PlayerFighter : Fighter
 {
-    [SerializeField] private ColliderFinder _colliderFinder;
-    [SerializeField] private int _maxDamage;
+    [SerializeField, Min(1)] private int _maxDamage;
 
     private Health _health;
     private Animator _animator;
-   
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-            Attack(_animator, _colliderFinder, _maxDamage);
-    }
 
+    public int MaxDamage => _maxDamage;
+   
     public void Initialize(Animator animator, Health health)
     {
         _animator = animator;
