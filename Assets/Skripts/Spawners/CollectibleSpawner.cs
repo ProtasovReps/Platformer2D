@@ -8,7 +8,7 @@ public class CollectibleSpawner : MonoBehaviour
     [SerializeField] private float _spawnDelay = 10f;
 
     private GroundPlatformStash _groundPlatformStash;
-    private Warehouse _collectibleStash;
+    private CollectibleStash _collectibleStash;
     private List<Collectible> _spawnedCollectibles;
     private ObjectPool<Collectible> _pool;
 
@@ -34,7 +34,7 @@ public class CollectibleSpawner : MonoBehaviour
         }
     }
 
-    public void Initialize(GroundPlatformStash groundPlatformStash, Warehouse collectibleStash)
+    public void Initialize(GroundPlatformStash groundPlatformStash, CollectibleStash collectibleStash)
     {
         _collectibleStash = collectibleStash;
         _groundPlatformStash = groundPlatformStash;
