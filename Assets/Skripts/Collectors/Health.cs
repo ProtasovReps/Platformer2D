@@ -1,39 +1,47 @@
 using System;
 using UnityEngine;
 
-public class Health : ICollector
+public class Health
 {
-    private int _maxValue;
+    private ArgumentChecker _argumentChecker;
 
     public Health(int maxValue)
     {
-        _maxValue = maxValue;
+        MaxValue = maxValue;
+        _argumentChecker = new ArgumentChecker();
         Revive();
     }
 
-    public event Action Died;
+    public event Action ValueChanged;
 
+    public int MaxValue { get; }
     public int Value { get; private set; }
-    
-    public void Revive() => Value = _maxValue;
 
-    public void Collect(Collectible collectible)
+    public void Revive() => Value = MaxValue;
+
+    public void Heal(Treatment treatment, Vector3 parentPosition)
     {
-        if (collectible.EffectValue < 0)
-            throw new ArgumentOutOfRangeException(nameof(collectible));
-        
-        if (collectible.Type == CollectibleTypes.Medicine)
-            Value = Mathf.Clamp(Value, 0, _maxValue);
+        int healValue = treatment.GetCollected(parentPosition);
+
+        if (_argumentChecker.CheckPositiveValue(healValue))
+        {
+            if (_argumentChecker.CheckRange(Value, healValue, MaxValue))
+            {
+                Value = MaxValue;
+            }
+            else
+            {
+                Value += healValue;
+            }
+        }
     }
 
     public void TakeDamage(int damage)
     {
-        if (damage < 0)
-            throw new ArgumentOutOfRangeException(nameof(damage));
-
-        Value -= damage;
-
-        if (Value <= 0)
-            Died?.Invoke();
+        if (_argumentChecker.CheckPositiveValue(damage))
+        {
+            Value -= damage;
+            ValueChanged?.Invoke();
+        }
     }
 }

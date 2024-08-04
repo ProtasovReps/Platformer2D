@@ -4,25 +4,34 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerInteraction _playerInteraction;
+    [SerializeField] private TreatmentCollector _treatmentCollector;
+    [SerializeField] private MoneyCollector _moneyCollector;
     [SerializeField] private Animator _animator;
     [SerializeField, Min(1)] private int _maxHealth;
 
-    public Health Health { get; private set; }
-    public Wallet Wallet { get; private set; }
+    private Health _health;
+    private Wallet _wallet;
 
     public void Initialize()
     {
-        Health = new Health(_maxHealth);
-        Wallet = new Wallet();
+        _health = new Health(_maxHealth);
+        _wallet = new Wallet();
 
-        _playerInteraction.Initialize(_animator, Health);
+        _playerInteraction.Initialize(_animator, _health);
+        _treatmentCollector.Initialize(_health);
+        _moneyCollector.Initialize(_wallet);
 
-        Health.Died += Die;
+        _health.ValueChanged += CheckDeath;
     }
 
-    private void Die()
+    private void CheckDeath()
     {
-        _playerInteraction.enabled = false;
-        _animator.SetBool(AnimatorConstants.IsDead.ToString(), true);
+        int deathValue = 0;
+
+        if (_health.Value < deathValue)
+        {
+            _playerInteraction.enabled = false;
+            _animator.SetBool(AnimatorConstants.IsDead.ToString(), true);
+        }
     }
 }

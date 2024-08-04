@@ -1,20 +1,26 @@
 using System;
+using UnityEngine;
 
-public class Wallet : ICollector
+public class Wallet
 {
+    private ArgumentChecker _argumentChecker;
+
+    public Wallet() 
+    { 
+        _argumentChecker = new ArgumentChecker();
+    }
+
     public event Action AmountChanged;
 
     public int Value { get; private set; }
 
-    public void Collect(Collectible collectible)
+    public void Collect(Money money, Vector3 parentPosition)
     {
-        if (collectible.EffectValue < 0)
+        int moneyCount = money.GetCollected(parentPosition);
+
+        if (_argumentChecker.CheckPositiveValue(moneyCount))
         {
-            throw new ArgumentOutOfRangeException(nameof(collectible));
-        }
-        else if (collectible.Type == CollectibleTypes.Money)
-        {
-            Value += collectible.EffectValue;
+            Value += moneyCount;
             AmountChanged?.Invoke();
         }
     }

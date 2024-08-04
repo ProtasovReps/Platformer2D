@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
         _enemyMover.Initialize(_animator);
         _enemyFighter.Initialize(_animator, _health);
         
-        _health.Died += Release;
+        _health.ValueChanged += Release;
     }
 
     public void Revive()

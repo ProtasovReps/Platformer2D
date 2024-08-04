@@ -4,34 +4,24 @@ using UnityEngine;
 
 public abstract class Collectible : MonoBehaviour
 {
-    private Coroutine _coroutine;
+    [SerializeField] private int _minValue;
+    [SerializeField] private int _maxValue;
 
     public event Action<Collectible> PickedUp;
 
-    public abstract CollectibleTypes Type { get; }
-    public int EffectValue { get; private set; }
-
-    protected abstract void OnTriggerEnter2D(Collider2D collision);
-
-    protected void Follow(Player player)
+    public int GetCollected(Vector3 targetPosition)
     {
-        _coroutine = StartCoroutine(FollowSmoothly(player));
+        StartFollowingSmoothly(targetPosition);
+        return GetRandomEffectValue();
     }
 
-    protected void SetRandomEffectValue(int minValue, int maxValue)
-    {
-        int randomEffectValue = UnityEngine.Random.Range(minValue, maxValue);
+    private void StartFollowingSmoothly(Vector3 targetPosition) => StartCoroutine(FollowSmoothly(targetPosition));
 
-        if (randomEffectValue < 0)
-            throw new ArgumentOutOfRangeException(nameof(randomEffectValue));
+    private int GetRandomEffectValue() => UnityEngine.Random.Range(_minValue, _maxValue);
 
-        EffectValue = randomEffectValue;
-    }
-
-    private IEnumerator FollowSmoothly(Player player)
+    private IEnumerator FollowSmoothly(Vector3 targetPosition)
     {
         float pickUpSpeed = 15;
-        Vector3 targetPosition = player.transform.position;
 
         while (transform.position != targetPosition)
         {
