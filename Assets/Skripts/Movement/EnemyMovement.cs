@@ -12,16 +12,14 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        _enemyVision.PlayerFound += StartChasing;
-        _enemyVision.PlayerLost += StartPatrolling;
+        _enemyVision.PlayerSeen += StartMoving;
 
         StartPatrolling();
     }
 
     private void OnDisable()
     {
-        _enemyVision.PlayerFound -= StartChasing;
-        _enemyVision.PlayerLost -= StartPatrolling;
+        _enemyVision.PlayerSeen -= StartMoving;
     }
 
     public void Initialize(Animator animator)
@@ -30,12 +28,12 @@ public class EnemyMovement : MonoBehaviour
         _animator.SetBool(AnimatorConstants.IsRunning.ToString(), true);
     }
 
-    private void StartPatrolling()
+    private void StartMoving(bool isPlayerSeen)
     {
-        StopMoving();
-
-        if (gameObject.activeSelf)
-            _coroutine = StartCoroutine(Patrol());
+        if (isPlayerSeen)
+            StartChasing();
+        else
+            StartPatrolling();
     }
 
     private void StartChasing()
@@ -46,10 +44,27 @@ public class EnemyMovement : MonoBehaviour
             _coroutine = StartCoroutine(Chase());
     }
 
+    private void StartPatrolling()
+    {
+        StopMoving();
+
+        if (gameObject.activeSelf)
+            _coroutine = StartCoroutine(Patrol());
+    }
+
     private void StopMoving()
     {
         if (_coroutine != null)
             StopCoroutine(_coroutine);
+    }
+
+    private IEnumerator Chase()
+    {
+        while (enabled)
+        {
+            transform.Translate(transform.right * _moveSpeed * Time.deltaTime, Space.World);
+            yield return null;
+        }
     }
 
     private IEnumerator Patrol()
@@ -59,15 +74,6 @@ public class EnemyMovement : MonoBehaviour
             if (_groundCheker.CheckGround() == false)
                 Rotate();
 
-            transform.Translate(transform.right * _moveSpeed * Time.deltaTime, Space.World);
-            yield return null;
-        }
-    }
-
-    private IEnumerator Chase()
-    {
-        while (enabled)
-        {
             transform.Translate(transform.right * _moveSpeed * Time.deltaTime, Space.World);
             yield return null;
         }

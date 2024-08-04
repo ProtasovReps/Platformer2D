@@ -15,14 +15,12 @@ public class EnemyFighter : Fighter
 
     private void OnEnable()
     {
-        _enemyVision.PlayerFound += StartAttackDelayed;
-        _enemyVision.PlayerLost += StopAttackDelayed;
+        _enemyVision.PlayerSeen += ChooseAction;
     }
 
     private void OnDisable()
     {
-        _enemyVision.PlayerFound -= StartAttackDelayed;
-        _enemyVision.PlayerLost -= StopAttackDelayed;
+        _enemyVision.PlayerSeen -= ChooseAction;
 
         StopAttackDelayed();
     }
@@ -38,6 +36,14 @@ public class EnemyFighter : Fighter
     {
         _animator.SetTrigger(AnimatorConstants.TakeHit.ToString());
         _health.TakeDamage(value);
+    }
+
+    private void ChooseAction(bool isPlayerSeen)
+    {
+        if (isPlayerSeen)
+            StartAttackDelayed();
+        else
+            StopAttackDelayed();
     }
 
     private void StartAttackDelayed()

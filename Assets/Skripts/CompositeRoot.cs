@@ -6,7 +6,7 @@ public class CompositeRoot : MonoBehaviour
     [SerializeField] private UserInterface _userInterface;
     [SerializeField] private CollectibleSpawner _collectibleSpawner;
     [SerializeField] private EnemySpawner _enemySpawner;
-    [SerializeField] private CollectibleStash _collectibleStash;
+    [SerializeField] private Warehouse _collectibleStash;
     [SerializeField] private GroundPlatformStash _groundPlatformStash;
 
     private void Awake()

@@ -5,15 +5,11 @@ using UnityEngine;
 public abstract class Collectible : MonoBehaviour
 {
     private Coroutine _coroutine;
-    private CollectibleSpawner _collectibleSpawner;
+
+    public event Action<Collectible> PickedUp;
 
     public abstract CollectibleTypes Type { get; }
     public int EffectValue { get; private set; }
-
-    public void Initialize(CollectibleSpawner collectibleSpawner)
-    {
-        _collectibleSpawner = collectibleSpawner;
-    }
 
     protected abstract void OnTriggerEnter2D(Collider2D collision);
 
@@ -44,6 +40,6 @@ public abstract class Collectible : MonoBehaviour
             yield return null;
         }
 
-        _collectibleSpawner.ReleaseCollectible(this);
+        PickedUp?.Invoke(this);
     }
 }
