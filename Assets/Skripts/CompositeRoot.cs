@@ -4,16 +4,14 @@ public class CompositeRoot : MonoBehaviour
 {
     [SerializeField] private Player _player;
     [SerializeField] private UserInterface _userInterface;
-    [SerializeField] private CollectibleSpawner _collectibleSpawner;
-    [SerializeField] private EnemySpawner _enemySpawner;
-    [SerializeField] private CollectibleStash _collectibleStash;
-    [SerializeField] private GroundPlatformStash _groundPlatformStash;
+    [SerializeField] private Pool _collectibleSpawner;
+    [SerializeField] private Pool _enemySpawner;
 
-    private void Start()
+    private void Awake()
     {
         _player.Initialize();
-        _userInterface.Initialize(_player, _enemySpawner);
-        _enemySpawner.Initialize(_groundPlatformStash);
-        _collectibleSpawner.Initialize(_groundPlatformStash, _collectibleStash);
+        _enemySpawner.Initialize();
+        _collectibleSpawner.Initialize();
+        _userInterface.Initialize(_player);
     }
 }

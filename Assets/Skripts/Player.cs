@@ -23,10 +23,10 @@ public class Player : MonoBehaviour
 
         _health.ValueChanged += CheckDeath;
     }
+    
+    public IRangeable GetWalletAsRangeable() => _wallet; //Sdelai fabricu vmesto etogo govna..
 
-    public IRangeable GetWalletAsStatShareable() => _wallet;
-
-    public IRangeable GetHealthAsStatShareable() => _health;
+    public IRangeable GetHealthAsRangeable() => _health; //umolyaiu..
 
     private void CheckDeath()
     {

@@ -7,11 +7,8 @@ public class MoneyCollector : Collector
     protected override void OnTriggerEnter2D(Collider2D other)
     {
         if (other.TryGetComponent(out Money money))
-            _wallet.Collect(money, CollectPoint);
+            _wallet.Collect(money, transform.position);
     }
 
-    public void Initialize(Wallet wallet)
-    {
-        _wallet = wallet;
-    }
+    public void Initialize(Wallet wallet) => _wallet = wallet;
 }

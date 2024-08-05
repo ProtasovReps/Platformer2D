@@ -1,14 +1,13 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GroundPlatformStash : MonoBehaviour
 {
-    [SerializeField] private List<Ground> _groundPlatforms;
+    [SerializeField] private Ground[] _groundPlatforms;
 
     public Ground GetRandomPlatform()
     {
-        int randomIndex = UnityEngine.Random.Range(0, _groundPlatforms.Count);
+        int randomIndex = UnityEngine.Random.Range(0, _groundPlatforms.Length);
         Ground ground = _groundPlatforms[randomIndex];
 
         if (ground != null)

@@ -2,64 +2,57 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-public class Enemy : MonoBehaviour
+public class Enemy : PoolingObject
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private EnemyFighter _enemyFighter;
     [SerializeField] private EnemyMovement _enemyMover;
+    [SerializeField] private SmoothSliderStatView _healthbar;
     [SerializeField, Min(1)] private int _maxHealth;
 
     private Collider2D _collider2D;
     private Health _health;
 
-    public event Action<Enemy> Died;
+    public override event Action<PoolingObject> ReadyToRelease;
 
-    private void OnEnable()
-    {
-        if (_health != null)
-            _health.ValueChanged += CheckHealth;
-    }
-
-    private void OnDisable()
-    {
-        if (_health != null)
-            _health.ValueChanged -= CheckHealth;
-    }
+    private void OnEnable() => Initialize();
 
     public void Initialize()
     {
         _health = new Health(_maxHealth);
+        _healthbar.Initialize(_health);
         _collider2D = GetComponent<Collider2D>();
 
         _enemyMover.Initialize(_animator);
         _enemyFighter.Initialize(_animator, _health);
-
-        _health.ValueChanged += CheckHealth;
     }
 
-    public void Revive()
+    public override void Appear()
     {
-        enabled = true;
+        _health.ValueChanged += CheckHealth;
         _health.Revive();
 
-        _collider2D.attachedRigidbody.isKinematic = false;
-        _collider2D.enabled = true;
-        _enemyFighter.enabled = true;
-        _enemyMover.enabled = true;
+        SwitchState(true);
 
         _animator.SetBool(AnimatorConstants.IsDead.ToString(), false);
         _animator.SetBool(AnimatorConstants.IsRunning.ToString(), true);
     }
 
-    public void Die()
+    public override void Release()
     {
-        enabled = false;
-        _enemyFighter.enabled = false;
-        _collider2D.attachedRigidbody.isKinematic = true;
-        _collider2D.enabled = false;
-        _enemyMover.enabled = false;
+        _health.ValueChanged -= CheckHealth;
+        
+        SwitchState(false);
 
         _animator.SetBool(AnimatorConstants.IsDead.ToString(), true);
+    }
+
+    private void SwitchState(bool isAlive)
+    {
+        _collider2D.enabled = isAlive;
+        _enemyFighter.enabled = isAlive;
+        _enemyMover.enabled = isAlive;
+        _collider2D.attachedRigidbody.isKinematic = isAlive == false;
     }
 
     private void CheckHealth()
@@ -67,6 +60,6 @@ public class Enemy : MonoBehaviour
         int deadHealthValue = 0;
 
         if (_health.Value <= deadHealthValue)
-            Died?.Invoke(this);
+            ReadyToRelease?.Invoke(this);
     }
 }

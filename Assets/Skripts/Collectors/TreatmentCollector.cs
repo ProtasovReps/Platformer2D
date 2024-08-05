@@ -7,11 +7,8 @@ public class TreatmentCollector : Collector
     protected override void OnTriggerEnter2D(Collider2D other)
     {
         if (other.TryGetComponent(out Treatment treatment))
-            _health.Heal(treatment, CollectPoint);
+            _health.Heal(treatment, transform.position);
     }
 
-    public void Initialize(Health health)
-    {
-        _health = health;
-    }
+    public void Initialize(Health health) => _health = health;
 }

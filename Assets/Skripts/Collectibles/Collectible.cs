@@ -3,12 +3,12 @@ using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public abstract class Collectible : MonoBehaviour
+public abstract class Collectible :  PoolingObject
 {
     [SerializeField, Min(1)] private int _minValue;
     [SerializeField, Min(1)] private int _maxValue;
 
-    public event Action<Collectible> PickedUp;
+    public override event Action<PoolingObject> ReadyToRelease;
 
     public int GetCollected(Vector3 targetPosition)
     {
@@ -31,6 +31,6 @@ public abstract class Collectible : MonoBehaviour
             yield return null;
         }
 
-        PickedUp?.Invoke(this);
+        ReadyToRelease?.Invoke(this);
     }
 }

@@ -8,8 +8,8 @@ public class Health : IRangeable
     public Health(int maxValue)
     {
         MaxValue = maxValue;
-        _argumentChecker = new ArgumentChecker();
         Revive();
+        _argumentChecker = new ArgumentChecker();
     }
 
     public event Action ValueChanged;
@@ -17,7 +17,11 @@ public class Health : IRangeable
     public int MaxValue { get; }
     public int Value { get; private set; }
 
-    public void Revive() => Value = MaxValue;
+    public void Revive()
+    {
+        Value = MaxValue;
+        ValueChanged?.Invoke();
+    }
 
     public void Heal(Treatment treatment, Vector3 parentPosition)
     {
