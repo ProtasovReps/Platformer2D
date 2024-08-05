@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public abstract class Collectible : MonoBehaviour
 {
-    [SerializeField] private int _minValue;
-    [SerializeField] private int _maxValue;
+    [SerializeField, Min(1)] private int _minValue;
+    [SerializeField, Min(1)] private int _maxValue;
 
     public event Action<Collectible> PickedUp;
 
@@ -17,7 +18,7 @@ public abstract class Collectible : MonoBehaviour
 
     private void StartFollowingSmoothly(Vector3 targetPosition) => StartCoroutine(FollowSmoothly(targetPosition));
 
-    private int GetRandomEffectValue() => UnityEngine.Random.Range(_minValue, _maxValue);
+    private int GetRandomEffectValue() => Random.Range(_minValue, _maxValue);
 
     private IEnumerator FollowSmoothly(Vector3 targetPosition)
     {

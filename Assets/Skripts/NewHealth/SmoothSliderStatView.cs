@@ -9,7 +9,7 @@ public class SmoothSliderStatView : StatView
 
     private Coroutine _coroutine;
 
-    protected override void SetValue()
+    protected override void StartSettingValue()
     {
         if (_coroutine == null)
             _coroutine = StartCoroutine(SetSliderValueSmoothly());
@@ -30,7 +30,7 @@ public class SmoothSliderStatView : StatView
 
     private float GetNewSliderValue()
     {
-        float healthRatio = (float)Stat.GetValue() / Stat.GetMaxValue();
+        float healthRatio = (float)Stat.Value / Stat.MaxValue;
         float newSliderValue = _slider.maxValue * healthRatio;
 
         return newSliderValue;

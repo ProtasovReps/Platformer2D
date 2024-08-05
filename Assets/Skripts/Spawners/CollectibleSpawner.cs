@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Pool;
 
 public class CollectibleSpawner : MonoBehaviour
@@ -9,14 +10,14 @@ public class CollectibleSpawner : MonoBehaviour
 
     private GroundPlatformStash _groundPlatformStash;
     private CollectibleStash _collectibleStash;
-    private List<Collectible> _spawnedCollectibles;
+    private List<Collectible> _pooledCollectibles;
     private ObjectPool<Collectible> _pool;
 
     private void OnEnable()
     {
-        if(_spawnedCollectibles != null && _spawnedCollectibles.Count > 0)
+        if(_pooledCollectibles != null && _pooledCollectibles.Count > 0)
         {
-            foreach(var collectible in _spawnedCollectibles)
+            foreach(var collectible in _pooledCollectibles)
             {
                 collectible.PickedUp += ReleaseCollectible;
             }
@@ -25,9 +26,9 @@ public class CollectibleSpawner : MonoBehaviour
 
     private void OnDisable()
     {
-        if (_spawnedCollectibles != null && _spawnedCollectibles.Count > 0)
+        if (_pooledCollectibles != null && _pooledCollectibles.Count > 0)
         {
-            foreach (var collectible in _spawnedCollectibles)
+            foreach (var collectible in _pooledCollectibles)
             {
                 collectible.PickedUp -= ReleaseCollectible;
             }
@@ -38,7 +39,7 @@ public class CollectibleSpawner : MonoBehaviour
     {
         _collectibleStash = collectibleStash;
         _groundPlatformStash = groundPlatformStash;
-        _spawnedCollectibles = new List<Collectible>();
+        _pooledCollectibles = new List<Collectible>();
         
         CreatePool();
         StartCoroutine(GetCollectiblesDelayed());
@@ -71,7 +72,7 @@ public class CollectibleSpawner : MonoBehaviour
         Collectible collectible = Instantiate(_collectibleStash.GetRandomCollectible());
         collectible.PickedUp += ReleaseCollectible;
        
-        _spawnedCollectibles.Add(collectible);
+        _pooledCollectibles.Add(collectible);
         return collectible;
     }
 
@@ -84,5 +85,5 @@ public class CollectibleSpawner : MonoBehaviour
         collectible.gameObject.SetActive(true);
     }
 
-    private void ReleaseCollectible(Collectible collectible) => _pool.Release(collectible);
+    private void ReleaseCollectible(Collectible collectible) => _pool.Release(collectible);   
 }

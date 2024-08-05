@@ -12,14 +12,14 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        _enemyVision.PlayerSeen += StartMoving;
+        _enemyVision.FighterSeen += StartMoving;
 
         StartPatrolling();
     }
 
     private void OnDisable()
     {
-        _enemyVision.PlayerSeen -= StartMoving;
+        _enemyVision.FighterSeen -= StartMoving;
     }
 
     public void Initialize(Animator animator)

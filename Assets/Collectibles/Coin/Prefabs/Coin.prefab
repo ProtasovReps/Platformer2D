@@ -120,6 +120,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b5a0b43268ef14fbc58ca980441d1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _minValue: 100
+  _maxValue: 301
 --- !u!58 &2255391837037914392
 CircleCollider2D:
   m_ObjectHideFlags: 0

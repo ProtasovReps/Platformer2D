@@ -2,27 +2,27 @@ using UnityEngine;
 
 public abstract class StatView : MonoBehaviour
 {
-    protected IValueShareable Stat { get; private set; }
+    protected IRangeable Stat { get; private set; }
 
     private void OnEnable()
     {
         if (Stat != null)
-            Stat.ValueChanged += SetValue;
+            Stat.ValueChanged += StartSettingValue;
     }
 
     private void OnDisable()
     {
         if (Stat != null)
-            Stat.ValueChanged -= SetValue;
+            Stat.ValueChanged -= StartSettingValue;
     }
 
-    public void Initialize(IValueShareable stat)
+    public void Initialize(IRangeable stat)
     {
         Stat = stat;
-        Stat.ValueChanged += SetValue;
+        Stat.ValueChanged += StartSettingValue;
 
-        SetValue();
+        StartSettingValue();
     }
 
-    protected abstract void SetValue();
+    protected abstract void StartSettingValue();
 }

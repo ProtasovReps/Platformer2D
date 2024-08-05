@@ -2,21 +2,38 @@ using UnityEngine;
 
 public abstract class Fighter : MonoBehaviour
 {
-    public abstract void TakeDamage(int value);
+    [SerializeField, Min(1)] private int _minDamage;
+    [SerializeField, Min(1)] private int _maxDamage;
+    [SerializeField] private ColliderFinder _colliderFinder;
 
-    public void Attack(Animator animator, ColliderFinder colliderFinder, int maxDamage)
+    private Animator _animator;
+    private Health _health;
+
+    public virtual void Initialize(Animator animator, Health health)
     {
-        if (colliderFinder.TryGetCollider(out Collider2D collider))
+        _animator = animator;
+        _health = health;
+    }
+
+    public virtual void TakeDamage(int value)
+    {
+        _animator.SetTrigger(AnimatorConstants.TakeHit.ToString());
+        _health.TakeDamage(value);
+    }
+
+    public void Attack()
+    {
+        if (_colliderFinder.TryGetCollider(out Collider2D collider))
         {
             if (collider.TryGetComponent(out Fighter fighter))
             {
                 if (fighter.isActiveAndEnabled)
                 {
-                    fighter.TakeDamage(Random.Range(0, maxDamage));
+                    fighter.TakeDamage(Random.Range(_minDamage, _maxDamage));
                 }
             }
         }
 
-        animator.SetTrigger(AnimatorConstants.Attack.ToString());
+        _animator.SetTrigger(AnimatorConstants.Attack.ToString());
     }
 }

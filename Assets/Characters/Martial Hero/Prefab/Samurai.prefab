@@ -148,7 +148,6 @@ MonoBehaviour:
   _playerFighter: {fileID: 5128981408489586639}
   _playerMovement: {fileID: 5507037875741779226}
   _groundChecker: {fileID: 2429334294013824594}
-  _colliderFinder: {fileID: 6114768523950838490}
   _inputReader: {fileID: 1208234584414089879}
 --- !u!114 &1208234584414089879
 MonoBehaviour:
@@ -188,7 +187,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 724bd23b713b2324a9574f1e80896b73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _minDamage: 0
   _maxDamage: 4
+  _colliderFinder: {fileID: 6114768523950838490}
 --- !u!70 &4114653415320664628
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -342,6 +343,7 @@ MonoBehaviour:
   _layersToCheck:
     serializedVersion: 2
     m_Bits: 64
+  _radius: 5
 --- !u!1 &8841285512777529713
 GameObject:
   m_ObjectHideFlags: 0

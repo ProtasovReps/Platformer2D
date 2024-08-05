@@ -24,11 +24,15 @@ public class Player : MonoBehaviour
         _health.ValueChanged += CheckDeath;
     }
 
+    public IRangeable GetWalletAsStatShareable() => _wallet;
+
+    public IRangeable GetHealthAsStatShareable() => _health;
+
     private void CheckDeath()
     {
-        int deathValue = 0;
+        int deathHealthValue = 0;
 
-        if (_health.Value < deathValue)
+        if (_health.Value <= deathHealthValue)
         {
             _playerInteraction.enabled = false;
             _animator.SetBool(AnimatorConstants.IsDead.ToString(), true);

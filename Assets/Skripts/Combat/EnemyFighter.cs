@@ -3,39 +3,28 @@ using UnityEngine;
 
 public class EnemyFighter : Fighter
 {
-    [SerializeField] private ColliderFinder _colliderFinder;
     [SerializeField] private EnemyVision _enemyVision;
-    [SerializeField, Min(1)] private int _maxDamage;
     [SerializeField, Min(0.5f)] private float _attackDelay;
 
-    private Health _health;
-    private Animator _animator;
     private Coroutine _coroutine;
     private WaitForSeconds _delay;
 
     private void OnEnable()
     {
-        _enemyVision.PlayerSeen += ChooseAction;
+        _enemyVision.FighterSeen += ChooseAction;
     }
 
     private void OnDisable()
     {
-        _enemyVision.PlayerSeen -= ChooseAction;
+        _enemyVision.FighterSeen -= ChooseAction;
 
         StopAttackDelayed();
     }
 
-    public void Initialize(Animator animator, Health health)
+    public override void Initialize(Animator animator, Health health)
     {
+        base.Initialize(animator, health);
         _delay = new WaitForSeconds(_attackDelay);
-        _animator = animator;
-        _health = health;
-    }
-
-    public override void TakeDamage(int value)
-    {
-        _animator.SetTrigger(AnimatorConstants.TakeHit.ToString());
-        _health.TakeDamage(value);
     }
 
     private void ChooseAction(bool isPlayerSeen)
@@ -62,7 +51,7 @@ public class EnemyFighter : Fighter
     {
         while (enabled)
         {
-            Attack(_animator, _colliderFinder, _maxDamage);
+            Attack();
             yield return _delay;
         }
     }

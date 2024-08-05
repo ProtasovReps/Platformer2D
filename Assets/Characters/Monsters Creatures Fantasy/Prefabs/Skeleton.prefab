@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1130743322413767982}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.373, y: -0.013, z: 0}
+  m_LocalPosition: {x: 0.18, y: 0, z: 0}
   m_LocalScale: {x: 0.7226924, y: 0.7226924, z: 0.7226924}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -47,6 +47,7 @@ MonoBehaviour:
   _layersToCheck:
     serializedVersion: 2
     m_Bits: 192
+  _radius: 4
 --- !u!1 &7213674664864506784
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,7 +113,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.24, y: 0}
+  m_Offset: {x: 0.13553159, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -123,7 +124,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.16, y: 0.58}
+  m_Size: {x: 1.0167288, y: 0.58}
   m_EdgeRadius: 0
 --- !u!114 &7172654581993831581
 MonoBehaviour:
@@ -294,10 +295,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 594c7059b6bbb5948a54b3e9cfdbe0b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _minDamage: 2
+  _maxDamage: 4
   _colliderFinder: {fileID: 4829050689172895776}
   _enemyVision: {fileID: 7172654581993831581}
-  _maxDamage: 5
-  _attackDelay: 1
+  _attackDelay: 2
 --- !u!50 &7658961984558970983
 Rigidbody2D:
   serializedVersion: 4

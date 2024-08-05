@@ -99,6 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b99d9f3dde0c2564f8e931a368f85255, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _minValue: 1
+  _maxValue: 3
 --- !u!95 &5187144554650039461
 Animator:
   serializedVersion: 5

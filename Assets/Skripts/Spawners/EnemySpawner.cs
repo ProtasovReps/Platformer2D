@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -10,6 +11,8 @@ public class EnemySpawner : MonoBehaviour
     private GroundPlatformStash _groundPlatformStash;
     private ObjectPool<Enemy> _pool;
 
+    public event Action EnemyReleased;
+
     public void Initialize(GroundPlatformStash groundPlatformStash)
     {
         _groundPlatformStash = groundPlatformStash;
@@ -17,8 +20,6 @@ public class EnemySpawner : MonoBehaviour
         CreatePool();
         StartCoroutine(GetEnemiesDelayed());
     }
-
-    public void ReleaseEnemy(Enemy enemy) => _pool.Release(enemy);
 
     private void CreatePool()
     {
@@ -45,8 +46,9 @@ public class EnemySpawner : MonoBehaviour
     private Enemy Create()
     {
         Enemy enemy = Instantiate(_enemy);
-        enemy.Initialize(this);
 
+        enemy.Initialize();
+        enemy.Died += Release;
         return enemy;
     }
 
@@ -54,8 +56,20 @@ public class EnemySpawner : MonoBehaviour
     {
         float upPosition = 1.5f;
         Vector2 randomPosition = _groundPlatformStash.GetRandomPlatform().GetRandomPosition(upPosition);
-        
+
         enemy.transform.position = randomPosition;
         enemy.Revive();
+    }
+
+    private void Release(Enemy enemy)
+    {
+        _pool.Release(enemy);
+        EnemyReleased?.Invoke();
+    } 
+
+    private void Destroy(Enemy enemy)
+    {
+        enemy.Died -= Release;
+        Destroy(enemy);
     }
 }

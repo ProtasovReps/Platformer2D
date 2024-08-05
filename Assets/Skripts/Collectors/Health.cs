@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Health
+public class Health : IRangeable
 {
     private ArgumentChecker _argumentChecker;
 
@@ -33,6 +33,8 @@ public class Health
             {
                 Value += healValue;
             }
+
+            ValueChanged?.Invoke();
         }
     }
 

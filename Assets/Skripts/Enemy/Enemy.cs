@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-[RequireComponent (typeof(Collider2D))]
+[RequireComponent(typeof(Collider2D))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
@@ -8,24 +9,37 @@ public class Enemy : MonoBehaviour
     [SerializeField] private EnemyMovement _enemyMover;
     [SerializeField, Min(1)] private int _maxHealth;
 
-    private EnemySpawner _enemySpawner;
     private Collider2D _collider2D;
     private Health _health;
 
-    public void Initialize(EnemySpawner enemySpawner)
+    public event Action<Enemy> Died;
+
+    private void OnEnable()
     {
-        _enemySpawner = enemySpawner;
+        if (_health != null)
+            _health.ValueChanged += CheckHealth;
+    }
+
+    private void OnDisable()
+    {
+        if (_health != null)
+            _health.ValueChanged -= CheckHealth;
+    }
+
+    public void Initialize()
+    {
         _health = new Health(_maxHealth);
         _collider2D = GetComponent<Collider2D>();
 
         _enemyMover.Initialize(_animator);
         _enemyFighter.Initialize(_animator, _health);
-        
-        _health.ValueChanged += Release;
+
+        _health.ValueChanged += CheckHealth;
     }
 
     public void Revive()
     {
+        enabled = true;
         _health.Revive();
 
         _collider2D.attachedRigidbody.isKinematic = false;
@@ -39,13 +53,20 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
+        enabled = false;
+        _enemyFighter.enabled = false;
         _collider2D.attachedRigidbody.isKinematic = true;
         _collider2D.enabled = false;
-        _enemyFighter.enabled = false;
         _enemyMover.enabled = false;
 
         _animator.SetBool(AnimatorConstants.IsDead.ToString(), true);
     }
 
-    private void Release() => _enemySpawner.ReleaseEnemy(this);
+    private void CheckHealth()
+    {
+        int deadHealthValue = 0;
+
+        if (_health.Value <= deadHealthValue)
+            Died?.Invoke(this);
+    }
 }

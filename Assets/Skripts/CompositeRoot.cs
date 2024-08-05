@@ -9,11 +9,11 @@ public class CompositeRoot : MonoBehaviour
     [SerializeField] private CollectibleStash _collectibleStash;
     [SerializeField] private GroundPlatformStash _groundPlatformStash;
 
-    private void Awake()
+    private void Start()
     {
         _player.Initialize();
+        _userInterface.Initialize(_player, _enemySpawner);
         _enemySpawner.Initialize(_groundPlatformStash);
         _collectibleSpawner.Initialize(_groundPlatformStash, _collectibleStash);
-        _userInterface.Initialize(_player);
     }
 }

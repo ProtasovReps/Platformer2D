@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Wallet
+public class Wallet : IRangeable
 {
     private ArgumentChecker _argumentChecker;
 
@@ -10,8 +10,9 @@ public class Wallet
         _argumentChecker = new ArgumentChecker();
     }
 
-    public event Action AmountChanged;
+    public event Action ValueChanged;
 
+    public int MaxValue => Value;
     public int Value { get; private set; }
 
     public void Collect(Money money, Vector3 parentPosition)
@@ -21,7 +22,7 @@ public class Wallet
         if (_argumentChecker.CheckPositiveValue(moneyCount))
         {
             Value += moneyCount;
-            AmountChanged?.Invoke();
+            ValueChanged?.Invoke();
         }
     }
 }
