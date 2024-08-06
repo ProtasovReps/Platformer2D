@@ -12,36 +12,29 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        _enemyVision.FighterSeen += StartMoving;
+        _enemyVision.FighterSeen += StartChasing;
+        _enemyVision.FighterLost += StartPatrolling;
 
         StartPatrolling();
     }
 
     private void OnDisable()
     {
-        _enemyVision.FighterSeen -= StartMoving;
+        _enemyVision.FighterSeen -= StartChasing;
+        _enemyVision.FighterLost -= StartPatrolling;
     }
 
     public void Initialize(Animator animator)
     {
         _animator = animator;
-        _animator.SetBool(AnimatorConstants.IsRunning.ToString(), true);
     }
 
-    private void StartMoving(bool isPlayerSeen)
-    {
-        if (isPlayerSeen)
-            StartChasing();
-        else
-            StartPatrolling();
-    }
-
-    private void StartChasing()
+    private void StartChasing(Fighter fighter)
     {
         StopMoving();
 
         if (gameObject.activeSelf)
-            _coroutine = StartCoroutine(Chase());
+            _coroutine = StartCoroutine(Chase(fighter));
     }
 
     private void StartPatrolling()
@@ -56,19 +49,29 @@ public class EnemyMovement : MonoBehaviour
     {
         if (_coroutine != null)
             StopCoroutine(_coroutine);
+
+        _animator.SetBool(AnimatorConstants.IsRunning.ToString(), false);
     }
 
-    private IEnumerator Chase()
+    private IEnumerator Chase(Fighter fighter)
     {
+        _animator.SetBool(AnimatorConstants.IsRunning.ToString(), true);
+
         while (enabled)
         {
-            transform.Translate(transform.right * _moveSpeed * Time.deltaTime, Space.World);
+            float xOffset = fighter.transform.position.x - transform.position.x;
+            Vector2 direction = new Vector2(xOffset, 0f).normalized;
+
+            transform.Translate(direction * _moveSpeed * Time.deltaTime, Space.World);
+            CheckDistance(fighter);
             yield return null;
         }
     }
 
     private IEnumerator Patrol()
     {
+        _animator.SetBool(AnimatorConstants.IsRunning.ToString(), true);
+
         while (enabled)
         {
             if (_groundCheker.CheckGround() == false)
@@ -85,5 +88,16 @@ public class EnemyMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(Vector3.zero);
         else
             transform.rotation = Quaternion.Euler(new Vector3(0, 180));
+    }
+
+    private void CheckDistance(Fighter fighter)
+    {
+        Vector2 offset = fighter.transform.position - transform.position;
+        float squareDistance = Vector2.SqrMagnitude(offset);
+        float maxDistance = 2f;
+        float squareMaxDistance = maxDistance * maxDistance;
+
+        if(squareDistance <= squareMaxDistance)
+            StopMoving();
     }
 }

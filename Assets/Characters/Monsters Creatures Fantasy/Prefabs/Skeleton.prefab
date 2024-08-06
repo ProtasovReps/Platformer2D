@@ -47,7 +47,7 @@ MonoBehaviour:
   _layersToCheck:
     serializedVersion: 2
     m_Bits: 192
-  _distance: 5
+  _distance: 2
 --- !u!1 &7213674664864506784
 GameObject:
   m_ObjectHideFlags: 0

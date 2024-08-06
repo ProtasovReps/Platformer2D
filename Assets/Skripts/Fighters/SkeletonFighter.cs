@@ -11,12 +11,14 @@ public class SkeletonFighter : Fighter
 
     private void OnEnable()
     {
-        _enemyVision.FighterSeen += ChooseAction;
+        _enemyVision.FighterSeen += StartAttackDelayed;
+        _enemyVision.FighterLost += StopAttackDelayed;
     }
 
     private void OnDisable()
     {
-        _enemyVision.FighterSeen -= ChooseAction;
+        _enemyVision.FighterSeen -= StartAttackDelayed;
+        _enemyVision.FighterLost -= StopAttackDelayed;
 
         StopAttackDelayed();
     }
@@ -27,17 +29,9 @@ public class SkeletonFighter : Fighter
         _delay = new WaitForSeconds(_attackDelay);
     }
 
-    private void ChooseAction(bool isPlayerSeen)
+    private void StartAttackDelayed(Fighter fighter)
     {
-        if (isPlayerSeen)
-            StartAttackDelayed();
-        else
-            StopAttackDelayed();
-    }
-
-    private void StartAttackDelayed()
-    {
-        if (gameObject.activeSelf)
+        if (gameObject.activeSelf && fighter != null)
             _coroutine = StartCoroutine(AttackDelayed());
     }
 
@@ -51,7 +45,7 @@ public class SkeletonFighter : Fighter
     {
         while (enabled)
         {
-                AttackForward();
+            AttackForward();
 
             yield return _delay;
         }
