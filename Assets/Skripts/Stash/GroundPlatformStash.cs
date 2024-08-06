@@ -6,13 +6,13 @@ public class GroundPlatformStash : MonoBehaviour
 {
     [SerializeField] private Ground[] _groundPlatforms;
 
-    public Ground GetRandomPlatform()
+    public Vector2 GetRandomPlatformPosition()
     {
         int randomIndex = Random.Range(0, _groundPlatforms.Length);
         Ground ground = _groundPlatforms[randomIndex];
 
         if (ground != null)
-            return ground;
+            return ground.GetRandomPosition();
         else
             throw new ArgumentNullException(nameof(ground));
     }

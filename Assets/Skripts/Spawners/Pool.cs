@@ -48,8 +48,7 @@ public class Pool : MonoBehaviour
 
     private void Get(PoolingObject pollingObject)
     {
-        float upPosition = 1.5f;
-        Vector2 randomPosition = _groundPlatformStash.GetRandomPlatform().GetRandomPosition(upPosition);
+        Vector2 randomPosition = _groundPlatformStash.GetRandomPlatformPosition();
 
         pollingObject.ChangePosition(randomPosition);
         pollingObject.Appear();
