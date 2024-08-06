@@ -94,10 +94,9 @@ public class EnemyMovement : MonoBehaviour
     {
         Vector2 offset = fighter.transform.position - transform.position;
         float squareDistance = Vector2.SqrMagnitude(offset);
-        float maxDistance = 2f;
-        float squareMaxDistance = maxDistance * maxDistance;
+        float maxDistance = 4f;
 
-        if(squareDistance <= squareMaxDistance)
+        if(squareDistance <= maxDistance)
             StopMoving();
     }
 }
