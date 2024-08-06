@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class SkeletonFighter : Fighter
+public class EnemyFighter : Fighter
 {
     [SerializeField] private EnemyVision _enemyVision;
     [SerializeField, Min(0.5f)] private float _attackDelay;
@@ -31,7 +31,7 @@ public class SkeletonFighter : Fighter
 
     private void StartAttackDelayed(Fighter fighter)
     {
-        if (gameObject.activeSelf && fighter != null)
+        if (gameObject.activeSelf && fighter.isActiveAndEnabled)
             _coroutine = StartCoroutine(AttackDelayed());
     }
 
@@ -46,7 +46,6 @@ public class SkeletonFighter : Fighter
         while (enabled)
         {
             AttackForward();
-
             yield return _delay;
         }
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : PoolingObject
 {
     [SerializeField] private Animator _animator;
-    [SerializeField] private SkeletonFighter _enemyFighter;
+    [SerializeField] private EnemyFighter _enemyFighter;
     [SerializeField] private EnemyMovement _enemyMover;
     [SerializeField] private SmoothSliderStatView _healthbar;
     [SerializeField, Min(1)] private int _maxHealth;
