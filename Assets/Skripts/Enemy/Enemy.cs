@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : PoolingObject
 {
     [SerializeField] private Animator _animator;
-    [SerializeField] private EnemyFighter _enemyFighter;
+    [SerializeField] private SkeletonFighter _enemyFighter;
     [SerializeField] private EnemyMovement _enemyMover;
     [SerializeField] private SmoothSliderStatView _healthbar;
     [SerializeField, Min(1)] private int _maxHealth;
@@ -15,17 +15,7 @@ public class Enemy : PoolingObject
 
     public override event Action<PoolingObject> ReadyToRelease;
 
-    private void OnEnable() => Initialize();
-
-    public void Initialize()
-    {
-        _health = new Health(_maxHealth);
-        _healthbar.Initialize(_health);
-        _collider2D = GetComponent<Collider2D>();
-
-        _enemyMover.Initialize(_animator);
-        _enemyFighter.Initialize(_animator, _health);
-    }
+    private void Awake() => Initialize();
 
     public override void Appear()
     {
@@ -53,6 +43,16 @@ public class Enemy : PoolingObject
         _enemyFighter.enabled = isAlive;
         _enemyMover.enabled = isAlive;
         _collider2D.attachedRigidbody.isKinematic = isAlive == false;
+    }
+
+    private void Initialize()
+    {
+        _health = new Health(_maxHealth);
+        _healthbar.Initialize(_health);
+        _collider2D = GetComponent<Collider2D>();
+
+        _enemyMover.Initialize(_animator);
+        _enemyFighter.Initialize(_health, _animator);
     }
 
     private void CheckHealth()

@@ -24,9 +24,9 @@ public class Player : MonoBehaviour
         _health.ValueChanged += CheckDeath;
     }
     
-    public IRangeable GetWalletAsRangeable() => _wallet; //Sdelai fabricu vmesto etogo govna..
+    public IRangeable GetWalletAsRangeable() => _wallet; 
 
-    public IRangeable GetHealthAsRangeable() => _health; //umolyaiu..
+    public IRangeable GetHealthAsRangeable() => _health; 
 
     private void CheckDeath()
     {

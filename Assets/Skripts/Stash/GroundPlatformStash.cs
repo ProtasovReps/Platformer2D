@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GroundPlatformStash : MonoBehaviour
 {
@@ -7,7 +8,7 @@ public class GroundPlatformStash : MonoBehaviour
 
     public Ground GetRandomPlatform()
     {
-        int randomIndex = UnityEngine.Random.Range(0, _groundPlatforms.Length);
+        int randomIndex = Random.Range(0, _groundPlatforms.Length);
         Ground ground = _groundPlatforms[randomIndex];
 
         if (ground != null)

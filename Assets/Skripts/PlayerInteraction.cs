@@ -7,14 +7,10 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private GroundChecker _groundChecker;
     [SerializeField] private InputReader _inputReader;
 
-    private Animator _animator;
-
     public void Initialize(Animator animator, Health health)
     {
-        _animator = animator;
-
-        _playerMovement.Initialize(_animator);
-        _playerFighter.Initialize(_animator, health);
+        _playerMovement.Initialize(animator);
+        _playerFighter.Initialize(health, animator);
     }
 
     private void FixedUpdate()
@@ -36,9 +32,9 @@ public class PlayerInteraction : MonoBehaviour
             _playerMovement.Jump();
         }
 
-        if (_inputReader.GetIsAttacking())
+        if (_inputReader.GetIsForwardAttacking())
         {
-            _playerFighter.Attack();
+            _playerFighter.AttackForward();
         }
     }
 }

@@ -22,7 +22,7 @@ public class InputReader : MonoBehaviour
 
     public bool GetIsJumping() => GetBoolAsTrigger(ref _isJumping);
     
-    public bool GetIsAttacking() => GetBoolAsTrigger(ref _isAttacking);
+    public bool GetIsForwardAttacking() => GetBoolAsTrigger(ref _isAttacking);
 
     private bool GetBoolAsTrigger(ref bool value)
     {

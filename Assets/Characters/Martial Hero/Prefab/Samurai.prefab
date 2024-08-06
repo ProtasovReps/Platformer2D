@@ -34,7 +34,7 @@ Transform:
   m_GameObject: {fileID: 3343888102086334684}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.1770735, y: -1.03, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4.2615, y: 4.2615, z: 4.2615}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -187,9 +187,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 724bd23b713b2324a9574f1e80896b73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minDamage: 0
+  _minDamage: 1
   _maxDamage: 4
-  _colliderFinder: {fileID: 6114768523950838490}
+  _fighterFinder: {fileID: 6114768523950838490}
 --- !u!70 &4114653415320664628
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 8824877207903223633}
   - component: {fileID: 6114768523950838490}
   m_Layer: 7
-  m_Name: ColliderFinder
+  m_Name: FighterFinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -322,7 +322,7 @@ Transform:
   m_GameObject: {fileID: 6701129218110290100}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.424, y: 0, z: 0}
+  m_LocalPosition: {x: 0.2566, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -343,7 +343,7 @@ MonoBehaviour:
   _layersToCheck:
     serializedVersion: 2
     m_Bits: 64
-  _radius: 5
+  _distance: 4
 --- !u!1 &8841285512777529713
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,7 +425,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f036f116582f1142b32925a43a4450f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collectPoint: {fileID: 363242506499489851}
 --- !u!114 &9062460513345066396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,4 +437,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4106364a55046d4088d73214cb7e8bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collectPoint: {fileID: 363242506499489851}

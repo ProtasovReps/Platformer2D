@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class EnemyFighter : Fighter
+public class SkeletonFighter : Fighter
 {
     [SerializeField] private EnemyVision _enemyVision;
     [SerializeField, Min(0.5f)] private float _attackDelay;
@@ -21,9 +21,9 @@ public class EnemyFighter : Fighter
         StopAttackDelayed();
     }
 
-    public override void Initialize(Animator animator, Health health)
+    public override void Initialize(Health health, Animator animator)
     {
-        base.Initialize(animator, health);
+        base.Initialize(health, animator);
         _delay = new WaitForSeconds(_attackDelay);
     }
 
@@ -51,7 +51,8 @@ public class EnemyFighter : Fighter
     {
         while (enabled)
         {
-            Attack();
+                AttackForward();
+
             yield return _delay;
         }
     }

@@ -4,15 +4,15 @@ public abstract class Fighter : MonoBehaviour
 {
     [SerializeField, Min(1)] private int _minDamage;
     [SerializeField, Min(1)] private int _maxDamage;
-    [SerializeField] private ColliderFinder _colliderFinder;
+    [SerializeField] private FighterFinder _fighterFinder;
 
-    private Animator _animator;
     private Health _health;
+    private Animator _animator;
 
-    public virtual void Initialize(Animator animator, Health health)
+    public virtual void Initialize(Health health, Animator animator)
     {
-        _animator = animator;
         _health = health;
+        _animator = animator;
     }
 
     public virtual void TakeDamage(int value)
@@ -21,19 +21,11 @@ public abstract class Fighter : MonoBehaviour
         _health.TakeDamage(value);
     }
 
-    public void Attack()
+    public virtual void AttackForward()
     {
-        if (_colliderFinder.TryGetCollider(out Collider2D collider))
-        {
-            if (collider.TryGetComponent(out Fighter fighter))
-            {
-                if (fighter.isActiveAndEnabled)
-                {
-                    fighter.TakeDamage(Random.Range(_minDamage, _maxDamage));
-                }
-            }
-        }
-
         _animator.SetTrigger(AnimatorConstants.Attack.ToString());
+
+        if (_fighterFinder.TryGetFighterByRaycast(out Fighter fighter))
+            fighter.TakeDamage(Random.Range(_minDamage, _maxDamage));
     }
 }
