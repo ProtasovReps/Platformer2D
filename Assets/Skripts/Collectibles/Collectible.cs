@@ -7,8 +7,9 @@ public abstract class Collectible :  PoolingObject
 {
     [SerializeField, Min(1)] private int _minValue;
     [SerializeField, Min(1)] private int _maxValue;
+    [SerializeField, Min(1)] private float _pickUpSpeed;
 
-    public override event Action<PoolingObject> ReadyToRelease;
+    public override event Action<PoolingObject> WorkedOut;
 
     public int GetCollected(Vector3 targetPosition)
     {
@@ -22,15 +23,12 @@ public abstract class Collectible :  PoolingObject
 
     private IEnumerator FollowSmoothly(Vector3 targetPosition)
     {
-        float pickUpSpeed = 15;
-
         while (transform.position != targetPosition)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * pickUpSpeed);
-            pickUpSpeed++;
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * _pickUpSpeed);
             yield return null;
         }
 
-        ReadyToRelease?.Invoke(this);
+        WorkedOut?.Invoke(this);
     }
 }

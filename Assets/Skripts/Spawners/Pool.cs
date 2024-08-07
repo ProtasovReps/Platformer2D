@@ -5,8 +5,8 @@ using UnityEngine.Pool;
 public class Pool : MonoBehaviour
 {
     [SerializeField] private float _spawnDelay = 10f;
-    [SerializeField] private PoolingObjectStash _stash;
-    [SerializeField] private GroundPlatformStash _groundPlatformStash;
+    [SerializeField] private Stash<PoolingObject> _poolingObjectStash;
+    [SerializeField] private Stash<Ground> _groundPlatformStash;
     
     private ObjectPool<PoolingObject> _pool;
 
@@ -40,17 +40,18 @@ public class Pool : MonoBehaviour
 
     private PoolingObject Create()
     {
-        PoolingObject poolingObject = Instantiate(_stash.GetRandomPoolingObject());
+        PoolingObject poolingObject = Instantiate(_poolingObjectStash.GetRandomItem());
         
-        poolingObject.ReadyToRelease += Release;
+        poolingObject.WorkedOut += Release;
         return poolingObject;
     }
 
     private void Get(PoolingObject pollingObject)
     {
-        Vector2 randomPosition = _groundPlatformStash.GetRandomPlatformPosition();
+        Ground randomGroundPlatform = _groundPlatformStash.GetRandomItem();
+        Vector2 randomGroundPosition = randomGroundPlatform.GetRandomPosition();
 
-        pollingObject.ChangePosition(randomPosition);
+        pollingObject.ChangePosition(randomGroundPosition);
         pollingObject.Appear();
     }
 
@@ -58,7 +59,7 @@ public class Pool : MonoBehaviour
 
     private void Destroy(PoolingObject poolingObject)
     {
-        poolingObject.ReadyToRelease -= Release;
+        poolingObject.WorkedOut -= Release;
         Destroy(poolingObject);
     }
 }

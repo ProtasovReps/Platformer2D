@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2bd79a710506434ebc09b4f5bd11105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _poolingObjects:
+  _stashedItems:
   - {fileID: 1450477042988284042, guid: e2afcfb9c35c08c46baaa2570571b404, type: 3}
 --- !u!1 &87719978
 GameObject:
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnDelay: 6
-  _stash: {fileID: 1388068496}
+  _poolingObjectStash: {fileID: 1388068496}
   _groundPlatformStash: {fileID: 1502373099}
 --- !u!1 &176021134
 GameObject:
@@ -1235,7 +1235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnDelay: 7
-  _stash: {fileID: 28643810}
+  _poolingObjectStash: {fileID: 28643810}
   _groundPlatformStash: {fileID: 1502373099}
 --- !u!1 &686457923
 GameObject:
@@ -2170,9 +2170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2bd79a710506434ebc09b4f5bd11105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _poolingObjects:
-  - {fileID: 318481543258353465, guid: 020bc6dd5a04ab74eaee544704577dbb, type: 3}
+  _stashedItems:
   - {fileID: 9046509629953350518, guid: 49e6ee33250214a9facc214f3a2fecb7, type: 3}
+  - {fileID: 318481543258353465, guid: 020bc6dd5a04ab74eaee544704577dbb, type: 3}
 --- !u!4 &1476938038 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2205864491909426692, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
@@ -2242,7 +2242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f6dfbc1f783d5c4d926b56c5ad96455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _groundPlatforms:
+  _stashedItems:
   - {fileID: 1536172129}
   - {fileID: 992823279}
   - {fileID: 176021136}

@@ -2,12 +2,12 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class TextStatView : StatView
+public class SmoothTextStatView : StatView
 {
     [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private int _fontSizeEnhanceValue;
+    [SerializeField] private int _valueChangeSpeed = 1; 
 
-    private int _valueChangeSpeed = 1; 
     private int _lastValue;
     private Coroutine _coroutine;
 

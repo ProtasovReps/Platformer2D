@@ -7,13 +7,14 @@ public class Enemy : PoolingObject
     [SerializeField] private Animator _animator;
     [SerializeField] private EnemyFighter _enemyFighter;
     [SerializeField] private EnemyMovement _enemyMover;
-    [SerializeField] private SmoothSliderStatView _healthbar;
+    [SerializeField] private Transform _worldHealthViewTarget;
+    [SerializeField] private WorldStatView _worldHealthView;
     [SerializeField, Min(1)] private int _maxHealth;
 
     private Collider2D _collider2D;
     private Health _health;
 
-    public override event Action<PoolingObject> ReadyToRelease;
+    public override event Action<PoolingObject> WorkedOut;
 
     private void Awake() => Initialize();
 
@@ -24,17 +25,17 @@ public class Enemy : PoolingObject
 
         SwitchState(true);
 
-        _animator.SetBool(AnimatorConstants.IsDead.ToString(), false);
-        _animator.SetBool(AnimatorConstants.IsRunning.ToString(), true);
+        _animator.SetBool(AnimatorData.Params.IsDead, false);
+        _animator.SetBool(AnimatorData.Params.IsRunning, true);
     }
 
     public override void Release()
     {
         _health.ValueChanged -= CheckHealth;
-        
+
         SwitchState(false);
 
-        _animator.SetBool(AnimatorConstants.IsDead.ToString(), true);
+        _animator.SetBool(AnimatorData.Params.IsDead, true);
     }
 
     private void SwitchState(bool isAlive)
@@ -47,10 +48,11 @@ public class Enemy : PoolingObject
 
     private void Initialize()
     {
+        WorldStatView worldHealthView = Instantiate(_worldHealthView);
         _health = new Health(_maxHealth);
-        _healthbar.Initialize(_health);
         _collider2D = GetComponent<Collider2D>();
 
+        worldHealthView.Initialize(_health, _worldHealthViewTarget);
         _enemyMover.Initialize(_animator);
         _enemyFighter.Initialize(_health, _animator);
     }
@@ -60,6 +62,6 @@ public class Enemy : PoolingObject
         int deadHealthValue = 0;
 
         if (_health.Value <= deadHealthValue)
-            ReadyToRelease?.Invoke(this);
+            WorkedOut?.Invoke(this);
     }
 }

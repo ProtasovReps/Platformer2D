@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class PoolingObject : MonoBehaviour
 {
-    public abstract event Action<PoolingObject> ReadyToRelease;
+    public abstract event Action<PoolingObject> WorkedOut;
     
     public virtual void Release() => gameObject.SetActive(false);
 

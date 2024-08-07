@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minValue: 1
   _maxValue: 3
+  _pickUpSpeed: 30
 --- !u!95 &5187144554650039461
 Animator:
   serializedVersion: 5

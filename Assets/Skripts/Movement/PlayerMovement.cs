@@ -27,18 +27,18 @@ public class PlayerMovement : MonoBehaviour
     {
         float distance = direction * _moveSpeed * Time.fixedDeltaTime;
 
-        _animator.SetBool(AnimatorConstants.IsRunning.ToString(), true);
+        _animator.SetBool(AnimatorData.Params.IsRunning, true);
         transform.Translate(Vector2.right * distance, Space.World);
     }
 
     public void Stay()
     {
-        _animator.SetBool(AnimatorConstants.IsRunning.ToString(), false);
+        _animator.SetBool(AnimatorData.Params.IsRunning, false);
     }
 
     public void Jump()
     {
-        _animator.SetTrigger(AnimatorConstants.Jump.ToString());
+        _animator.SetTrigger(AnimatorData.Params.Jump);
         _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
     }
 }

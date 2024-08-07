@@ -122,6 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minValue: 100
   _maxValue: 301
+  _pickUpSpeed: 30
 --- !u!58 &2255391837037914392
 CircleCollider2D:
   m_ObjectHideFlags: 0

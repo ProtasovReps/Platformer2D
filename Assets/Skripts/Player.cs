@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
         if (_health.Value <= deathHealthValue)
         {
             _playerInteraction.enabled = false;
-            _animator.SetBool(AnimatorConstants.IsDead.ToString(), true);
+            _animator.SetBool(AnimatorData.Params.IsDead, true);
         }
     }
 }

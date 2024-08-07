@@ -17,13 +17,13 @@ public abstract class Fighter : MonoBehaviour
 
     public virtual void TakeDamage(int value)
     {
-        _animator.SetTrigger(AnimatorConstants.TakeHit.ToString());
+        _animator.SetTrigger(AnimatorData.Params.TakeHit);
         _health.TakeDamage(value);
     }
 
     public virtual void AttackForward()
     {
-        _animator.SetTrigger(AnimatorConstants.Attack.ToString());
+        _animator.SetTrigger(AnimatorData.Params.Attack);
 
         if (_fighterFinder.TryGetFighterByRaycast(out Fighter fighter))
             fighter.TakeDamage(Random.Range(_minDamage, _maxDamage));

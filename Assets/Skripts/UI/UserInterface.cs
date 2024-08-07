@@ -3,7 +3,7 @@ using UnityEngine;
 public class UserInterface : MonoBehaviour
 {
     [SerializeField] private SmoothSliderStatView _healthView;
-    [SerializeField] private TextStatView _walletView;
+    [SerializeField] private SmoothTextStatView _walletView;
 
     public void Initialize(Player player)
     {
