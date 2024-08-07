@@ -50,12 +50,12 @@ public class EnemyMovement : MonoBehaviour
         if (_coroutine != null)
             StopCoroutine(_coroutine);
 
-        _animator.SetBool(AnimatorData.Params.IsRunning, false);
+        _animator.SetBool(AnimatorParameters.IsRunning, false);
     }
 
     private IEnumerator Chase(Fighter fighter)
     {
-        _animator.SetBool(AnimatorData.Params.IsRunning, true);
+        _animator.SetBool(AnimatorParameters.IsRunning, true);
 
         while (enabled)
         {
@@ -70,7 +70,7 @@ public class EnemyMovement : MonoBehaviour
 
     private IEnumerator Patrol()
     {
-        _animator.SetBool(AnimatorData.Params.IsRunning, true);
+        _animator.SetBool(AnimatorParameters.IsRunning, true);
 
         while (enabled)
         {

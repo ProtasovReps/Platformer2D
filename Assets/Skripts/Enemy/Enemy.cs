@@ -25,8 +25,8 @@ public class Enemy : PoolingObject
 
         SwitchState(true);
 
-        _animator.SetBool(AnimatorData.Params.IsDead, false);
-        _animator.SetBool(AnimatorData.Params.IsRunning, true);
+        _animator.SetBool(AnimatorParameters.IsDead, false);
+        _animator.SetBool(AnimatorParameters.IsRunning, true);
     }
 
     public override void Release()
@@ -35,7 +35,7 @@ public class Enemy : PoolingObject
 
         SwitchState(false);
 
-        _animator.SetBool(AnimatorData.Params.IsDead, true);
+        _animator.SetBool(AnimatorParameters.IsDead, true);
     }
 
     private void SwitchState(bool isAlive)
