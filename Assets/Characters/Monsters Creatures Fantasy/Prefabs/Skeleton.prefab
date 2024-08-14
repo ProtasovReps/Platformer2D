@@ -301,7 +301,7 @@ MonoBehaviour:
   _enemyMover: {fileID: 5795797820962988724}
   _worldHealthViewTarget: {fileID: 2852971941177548697}
   _worldHealthView: {fileID: 4481298508140097155, guid: 0bf3e1c9f88e8db4f8f18a8878f465f2, type: 3}
-  _maxHealth: 6
+  _maxHealth: 10
 --- !u!114 &5795797820962988724
 MonoBehaviour:
   m_ObjectHideFlags: 0
