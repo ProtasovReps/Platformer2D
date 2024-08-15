@@ -5,12 +5,12 @@ public class ClosestEnemySearcher
 {
     public Enemy GetClosestEnemy(Vector2 position, Enemy[] enemies)
     {
+        if (enemies == null)
+            throw new ArgumentNullException(nameof(enemies));
+        
         int firstPosition = 0;
         int minLength = 1;
         Enemy closestEnemy = enemies[firstPosition];
-
-        if (enemies == null)
-            throw new ArgumentNullException(nameof(enemies));
 
         if (enemies.Length <= minLength)
             return closestEnemy;
