@@ -1,21 +1,36 @@
 using UnityEngine;
 
-public class AbilityPreview : MonoBehaviour
+public class VampirismRangePreview : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _rangePreview;
-    [SerializeField] private Timer _timer;
-    [SerializeField] private Color _disabledColor;
-    [SerializeField] private Color _enabledColor;
+    [SerializeField] private Vampirism _vampirism;
+    [SerializeField] private EnemyCapsuleSearcher _enemyCapsuleSearcher;
+    [SerializeField] private Color _notFoundColor;
+    [SerializeField] private Color _foundColor;
 
-    public void ShowAbilityRange()
+    private void OnEnable()
     {
-        if (_timer.IsEnded)
-            _rangePreview.color = _enabledColor;
-        else
-            _rangePreview.color = _disabledColor;
-        
-        _rangePreview.enabled = true;
+        _enemyCapsuleSearcher.Found += SetColor;
+        _vampirism.Started += Show;
+        _vampirism.Ended += Hide;
     }
 
-    public void HideAbilityRange() => _rangePreview.enabled = false;
+    private void OnDisable()
+    {
+        _enemyCapsuleSearcher.Found -= SetColor;
+        _vampirism.Started -= Show;
+        _vampirism.Ended -= Hide;
+    }
+
+    private void SetColor(bool isFound)
+    {
+        if (isFound)
+            _rangePreview.color = _foundColor;
+        else
+            _rangePreview.color = _notFoundColor;
+    }
+
+    private void Show() => _rangePreview.enabled = true;
+
+    private void Hide() => _rangePreview.enabled = false;
 }

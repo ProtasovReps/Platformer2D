@@ -6,8 +6,8 @@ public class InputReader : MonoBehaviour
 
     private bool _isJumping;
     private bool _isAttackingForward;
+    private bool _isSpecialAbility;
 
-    public bool IsSpecialAbility { get; private set; }
     public float HorizontalDirection {  get; private set; }
 
     private void Update()
@@ -21,15 +21,14 @@ public class InputReader : MonoBehaviour
             _isAttackingForward = true;
 
         if (Input.GetKeyDown(KeyCode.LeftAlt))
-            IsSpecialAbility = true;
-
-        if (Input.GetKeyUp(KeyCode.LeftAlt))
-            IsSpecialAbility = false;
+            _isSpecialAbility = true;
     }
 
     public bool GetIsJumping() => GetBoolAsTrigger(ref _isJumping);
     
     public bool GetIsForwardAttacking() => GetBoolAsTrigger(ref _isAttackingForward);
+
+    public bool GetIsSpecialAbility() => GetBoolAsTrigger(ref _isSpecialAbility);
 
     private bool GetBoolAsTrigger(ref bool value)
     {

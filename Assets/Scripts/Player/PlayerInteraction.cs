@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
@@ -7,15 +6,9 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private PlayerMovement _playerMovement;
     [SerializeField] private GroundChecker _groundChecker;
     [SerializeField] private InputReader _inputReader;
-    [SerializeField] private AbilityPreview _abilityPreview;
-
-    private Coroutine _coroutine;
-    private WaitUntil _delay;
 
     public void Initialize(Animator animator, Health health)
     {
-        _delay = new WaitUntil(() => _inputReader.IsSpecialAbility == false);
-       
         _playerMovement.Initialize(animator);
         _playerFighter.Initialize(health, animator);
     }
@@ -44,21 +37,9 @@ public class PlayerInteraction : MonoBehaviour
             _playerFighter.AttackForward();
         }
 
-        if (_inputReader.IsSpecialAbility)
+        if (_inputReader.GetIsSpecialAbility())
         {
-            if (_coroutine == null)
-                _coroutine = StartCoroutine(ActivateAbilityWithPreview());
+            _playerFighter.StealHealth();
         }
-    }
-
-    private IEnumerator ActivateAbilityWithPreview()
-    {
-        _abilityPreview.ShowAbilityRange();
-        yield return _delay;
-        
-        _abilityPreview.HideAbilityRange();
-        _playerFighter.StealHealth();
-
-        _coroutine = null;
     }
 }

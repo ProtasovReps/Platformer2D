@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,6 +6,8 @@ public class EnemyCapsuleSearcher : MonoBehaviour
 {
     [SerializeField] private LayerMask _layersToCheck;
     [SerializeField] private Vector2 _capsuleSize;
+
+    public event Action<bool> Found;
 
     public bool TryGetEnemyByCapsulecast(out Enemy[] enemies)
     {
@@ -20,11 +23,13 @@ public class EnemyCapsuleSearcher : MonoBehaviour
         if (enemyList.Count > 0)
         {
             enemies = enemyList.ToArray();
+            Found?.Invoke(true);
             return true;
         }
         else
         {
             enemies = null;
+            Found?.Invoke(false);
             return false;
         }
     }

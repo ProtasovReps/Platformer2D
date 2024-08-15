@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlayerFighter : Fighter
 {
-    [SerializeField] private EnemyCapsuleSearcher _enemySearcher;
     [SerializeField] private Vampirism _vampirism;
 
     private Health _health;
@@ -17,11 +16,6 @@ public class PlayerFighter : Fighter
     public void StealHealth()
     {
         if (_health.Value < _health.MaxValue)
-        {
-            if (_enemySearcher.TryGetEnemyByCapsulecast(out Enemy[] enemies))
-            {
-                _vampirism.StartStealingHealth(enemies);
-            }
-        }
+            _vampirism.StartStealingHealth();
     }
 }
