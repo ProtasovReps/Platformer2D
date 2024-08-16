@@ -46,7 +46,7 @@ public class Vampirism : MonoBehaviour
 
                 if (targetEnemy.HealthRange.Value <= _stealAmount)
                 {
-                    stealAmount *= targetEnemy.HealthRange.Value / _stealAmount;
+                    stealAmount *= targetEnemy.HealthRange.Value;
                 }
 
                 targetEnemy.HealthDecreaseable.DecreaseValue(stealAmount);

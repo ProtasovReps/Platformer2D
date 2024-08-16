@@ -13,6 +13,7 @@ public class EnemyCapsuleSearcher : MonoBehaviour
     {
         Collider2D[] hits = Physics2D.OverlapCapsuleAll(transform.position, _capsuleSize, CapsuleDirection2D.Horizontal, 0f, _layersToCheck);
         var enemyList = new List<Enemy>();
+        bool isFound = false;
 
         foreach (Collider2D hit in hits)
         {
@@ -22,15 +23,15 @@ public class EnemyCapsuleSearcher : MonoBehaviour
 
         if (enemyList.Count > 0)
         {
+            isFound = true;
             enemies = enemyList.ToArray();
-            Found?.Invoke(true);
-            return true;
         }
         else
         {
             enemies = null;
-            Found?.Invoke(false);
-            return false;
         }
+
+        Found?.Invoke(isFound);
+        return isFound;
     }
 }

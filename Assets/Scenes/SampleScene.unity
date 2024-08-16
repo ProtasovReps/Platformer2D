@@ -1573,6 +1573,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &726652436 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 224709613492947957, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
+  m_PrefabInstance: {fileID: 5952106097478575913}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92e89d137e75d4b45994aae342ec823b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &737282013
 GameObject:
   m_ObjectHideFlags: 0
@@ -2539,6 +2550,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 70993efc20dd39144bef2a898bebfc46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1476938052 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8642820736161613794, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
+  m_PrefabInstance: {fileID: 5952106097478575913}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f16238780fcdb94c8d971507032d471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1476938057 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1208234584414089879, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
+  m_PrefabInstance: {fileID: 5952106097478575913}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 872040415b7b1534c9f31cb158355f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1502373097
@@ -3515,6 +3548,10 @@ PrefabInstance:
       propertyPath: _capsuleSize.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1749126431452251850, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
+      propertyPath: m_Name
+      value: EnemyCapsuleSearcher
+      objectReference: {fileID: 0}
     - target: {fileID: 2205864491909426692, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.1770735
@@ -3567,6 +3604,14 @@ PrefabInstance:
       propertyPath: _minDamage
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7311453689608025329, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
+      propertyPath: m_Color.a
+      value: 0.05490196
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311453689608025329, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7465344901116677045, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -3581,11 +3626,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8642820736161613794, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
       propertyPath: _stealAmount
-      value: 2.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8642820736161613794, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
       propertyPath: _stealPercent
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8642820736161613794, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
+      propertyPath: _enemySearcher
+      value: 
+      objectReference: {fileID: 726652436}
+    - target: {fileID: 9176821179840287098, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
+      propertyPath: _vampirism
+      value: 
+      objectReference: {fileID: 1476938052}
+    - target: {fileID: 9176821179840287098, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
+      propertyPath: _inputReader
+      value: 
+      objectReference: {fileID: 1476938057}
+    - target: {fileID: 9176821179840287098, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
+      propertyPath: _foundColor.a
+      value: 0.05882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 9176821179840287098, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
+      propertyPath: _foundColor.b
+      value: 0.27687788
+      objectReference: {fileID: 0}
+    - target: {fileID: 9176821179840287098, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
+      propertyPath: _foundColor.g
+      value: 0.9622642
+      objectReference: {fileID: 0}
+    - target: {fileID: 9176821179840287098, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
+      propertyPath: _foundColor.r
+      value: 0.4188527
       objectReference: {fileID: 0}
     - target: {fileID: 9176821179840287098, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
       propertyPath: _enabledColor.a
@@ -3611,6 +3684,26 @@ PrefabInstance:
       propertyPath: _disabledColor.g
       value: 0.23921569
       objectReference: {fileID: 0}
+    - target: {fileID: 9176821179840287098, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
+      propertyPath: _notFoundColor.a
+      value: 0.05882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 9176821179840287098, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
+      propertyPath: _notFoundColor.b
+      value: 0.13679248
+      objectReference: {fileID: 0}
+    - target: {fileID: 9176821179840287098, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
+      propertyPath: _notFoundColor.g
+      value: 0.13679248
+      objectReference: {fileID: 0}
+    - target: {fileID: 9176821179840287098, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
+      propertyPath: _notFoundColor.r
+      value: 0.5882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 9176821179840287098, guid: 214e25cf1d86b9d4d836228fca671e86, type: 3}
+      propertyPath: _enemyCapsuleSearcher
+      value: 
+      objectReference: {fileID: 726652436}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

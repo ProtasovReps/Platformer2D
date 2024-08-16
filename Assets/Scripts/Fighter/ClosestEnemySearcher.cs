@@ -9,11 +9,7 @@ public class ClosestEnemySearcher
             throw new ArgumentNullException(nameof(enemies));
         
         int firstPosition = 0;
-        int minLength = 1;
         Enemy closestEnemy = enemies[firstPosition];
-
-        if (enemies.Length <= minLength)
-            return closestEnemy;
 
         foreach (Enemy enemy in enemies)
         {
